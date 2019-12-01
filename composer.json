@@ -1,0 +1,28 @@
+{
+    "name": "netsells/laravel-geo-scope",
+    "description": "An easy to use trait that can be added to models to allow distance based scopes to be applied",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adam Hutchison",
+            "email": "adam.hutchison@netsells.co.uk"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "laravel/framework": "^6.6"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Netsells\\GeoScope\\GeoScopeServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Netsells\\GeoScope\\": "src"
+        }
+    }
+}
