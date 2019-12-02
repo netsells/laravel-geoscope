@@ -109,5 +109,5 @@ $jobs2 = Job::withinDistanceOf(53.957962, -1.085485, 20, 'location1')
                 'units' => 'meters'
             ])->get();
 ```
-**Any missing config cptions will be replaced with the defaults defined in `config('geoscope.defaults')`. 
-Passing invalid config keys will also cause GeoScope to fallback to these defaults.**
+Any missing config options will be replaced with the defaults defined in `config('geoscope.defaults')`. 
+**Passing invalid config keys will also cause GeoScope to fallback to these defaults.**
