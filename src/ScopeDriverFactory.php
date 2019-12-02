@@ -38,7 +38,7 @@ class ScopeDriverFactory
      * @param string $key
      * @param ScopeDriverInterface $strategy
      */
-    public function registerDriverStrategy(string $key, ScopeDriverInterface $strategy)
+    public function registerDriverStrategy(string $key, string $strategy)
     {
         $this->registeredStrategies[$key] = $strategy;
     }

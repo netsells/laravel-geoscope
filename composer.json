@@ -9,9 +9,13 @@
             "email": "adam.hutchison@netsells.co.uk"
         }
     ],
-    "require": {},
+    "require": {
+        "mockery/mockery": "^1.3"
+    },
     "require-dev": {
-        "laravel/framework": "^6.6"
+        "laravel/framework": "^6.6",
+        "phpunit/phpunit": "^8.4",
+        "orchestra/testbench": "^4.4"
     },
     "extra": {
         "laravel": {
@@ -22,7 +26,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Netsells\\GeoScope\\": "src"
+            "Netsells\\GeoScope\\": "src",
+            "Netsells\\GeoScope\\Tests\\": "tests"
         }
     }
 }

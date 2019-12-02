@@ -95,3 +95,19 @@ $jobs = Job::withinDistanceOf(53.957962, -1.085485, 20, 'location1')->get();
 $jobs2 = Job::withinDistanceOf(53.957962, -1.085485, 20, 'location1')
             ->orWithinDistanceOf(52.143542, -2.08556, 20, 'location2');
 ```
+You may also pass in an array of config items as the third parameter to both the `withinDistanceOf` and `orWithinDistanceOf` scopes.
+```php
+
+$jobs = Job::withinDistanceOf(53.957962, -1.085485, 20, [
+                'lat-column' => 'lat-column-1',
+                'long-column' => 'long-column-1',
+                'units' => 'meters'
+            ])->get();
+
+$jobs2 = Job::withinDistanceOf(53.957962, -1.085485, 20, 'location1')
+            ->orWithinDistanceOf(52.143542, -2.08556, 20, [
+                'units' => 'meters'
+            ])->get();
+```
+**Any missing config cptions will be replaced with the defaults defined in `config('geoscope.defaults')`. 
+Passing invalid config keys will also cause GeoScope to fallback to these defaults.**

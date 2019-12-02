@@ -16,7 +16,7 @@ class ConfigManager
      * @param Builder $query
      * @param $configOption
      */
-    public function __construct(Builder $query, $configOption)
+    public function __construct(Builder $query, $configOption = null)
     {
         $this->modelClass = get_class($query->getModel());
         $this->configOption = $configOption;

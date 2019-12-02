@@ -40,21 +40,6 @@ class GeoScope
     }
 
     /**
-     * @param $driver
-     * @return $this
-     */
-    public function setScopeDriver($driver)
-    {
-        $this->scopeDriver = app(ScopeDriverFactory::class)
-            ->getStrategyInstance($driver)
-            ->setQuery($this->query)
-            ->setConversion(self::DISTANCE_CONVERSION_FROM_METERS[$this->config['units']])
-            ->setConfig($this->config);
-
-        return $this;
-    }
-
-    /**
      * @param float $lat
      * @param float $long
      * @param float $distance
@@ -76,5 +61,19 @@ class GeoScope
         return $this->scopeDriver->orWithinDistanceOf($lat, $long, $distance);
     }
 
+    /**
+     * @param $driver
+     * @return $this
+     */
+    protected function setScopeDriver($driver)
+    {
+        $this->scopeDriver = app(ScopeDriverFactory::class)
+            ->getStrategyInstance($driver)
+            ->setQuery($this->query)
+            ->setConversion(self::DISTANCE_CONVERSION_FROM_METERS[$this->config['units']])
+            ->setConfig($this->config);
+
+        return $this;
+    }
 }
 

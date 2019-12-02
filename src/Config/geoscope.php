@@ -14,26 +14,13 @@ return [
     /*
      * Register model specific settings here
      */
-    'models' => [
+//    'models' => [
 //        SomeModel::class => [
 //            'lat-column' => 'custom-lat-column-name',
 //            'long-column' => 'custom-long-column-name',
 //            'units' => 'meters'
 //        ]
-    ],
+//    ],
 
-    'models' => [
-        SomeModel::class => [
-            'location1' => [
-                'lat-column' => 'custom-lat-column-name',
-                'long-column' => 'custom-long-column-name',
-                'units' => 'meters'
-            ],
-            'location2' => [
-                'lat-column' => 'custom-lat-column-name',
-                'long-column' => 'custom-long-column-name',
-                'units' => 'meters'
-            ]
-        ]
-    ],
+
 ];
