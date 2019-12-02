@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Netsells\GeoScope;
-
 
 use Netsells\GeoScope\Interfaces\ScopeDriverInterface;
 use Netsells\GeoScope\ScopeDrivers\DefaultScopeDriver;
@@ -38,7 +36,7 @@ class ScopeDriverFactory
      * @param string $key
      * @param ScopeDriverInterface $strategy
      */
-    public function registerDriverStrategy(string $key, string $strategy)
+    public function registerDriverStrategy(string $key, string $strategy): void
     {
         $this->registeredStrategies[$key] = $strategy;
     }

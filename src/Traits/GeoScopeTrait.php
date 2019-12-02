@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Netsells\GeoScope\Traits;
-
 
 use Illuminate\Database\Eloquent\Builder;
 use Netsells\GeoScope\GeoScope;

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Netsells\GeoScope;
-
 
 use Illuminate\Database\Eloquent\Builder;
 use Netsells\GeoScope\Config\ConfigManager;
@@ -45,7 +43,7 @@ class GeoScope
      * @param float $distance
      * @return mixed
      */
-    public function withinDistanceOf(float $lat, float $long, float $distance)
+    public function withinDistanceOf(float $lat, float $long, float $distance): Builder
     {
         return $this->scopeDriver->withinDistanceOf($lat, $long, $distance);
     }
@@ -56,7 +54,7 @@ class GeoScope
      * @param float $distance
      * @return mixed
      */
-    public function orWithinDistanceOf(float $lat, float $long, float $distance)
+    public function orWithinDistanceOf(float $lat, float $long, float $distance): Builder
     {
         return $this->scopeDriver->orWithinDistanceOf($lat, $long, $distance);
     }
@@ -65,7 +63,7 @@ class GeoScope
      * @param $driver
      * @return $this
      */
-    protected function setScopeDriver($driver)
+    protected function setScopeDriver($driver): GeoScope
     {
         $this->scopeDriver = app(ScopeDriverFactory::class)
             ->getStrategyInstance($driver)

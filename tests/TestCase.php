@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Netsells\GeoScope\Tests;
-
 
 use Netsells\GeoScope\GeoScopeServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
@@ -36,6 +34,4 @@ abstract class TestCase extends BaseTestCase
         $this->app->config->set("geoscope.models.{$modelName}", $config);
 
     }
-
-
 }

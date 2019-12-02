@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Netsells\GeoScope\Config;
-
 
 use Illuminate\Database\Eloquent\Builder;
 
@@ -50,7 +48,7 @@ class ConfigManager
     /**
      * @return array
      */
-    protected function getSimpleModelConfig()
+    protected function getSimpleModelConfig(): array
     {
         return $this->getValidConfig(config("geoscope.models.{$this->modelClass}"));
     }
@@ -58,7 +56,7 @@ class ConfigManager
     /**
      * @return array
      */
-    protected function getNestedModelConfig()
+    protected function getNestedModelConfig(): array
     {
         return $this->getValidConfig(config("geoscope.models.{$this->modelClass}.{$this->configOption}"));
     }
@@ -66,7 +64,7 @@ class ConfigManager
     /**
      * @return array
      */
-    protected function getCustomConfig()
+    protected function getCustomConfig(): array
     {
         return $this->getValidConfig($this->configOption);
     }

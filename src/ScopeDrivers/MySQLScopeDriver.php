@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Netsells\GeoScope\ScopeDrivers;
-
 
 use Illuminate\Database\Eloquent\Builder;
 
@@ -48,6 +46,6 @@ class MySQLScopeDriver extends AbstractScopeDriver
                     point({$this->config['long-column']}, {$this->config['lat-column']}),
                     point(?, ?)
                 ) * {$this->conversion} < ?
-            EOD;
+EOD;
     }
 }

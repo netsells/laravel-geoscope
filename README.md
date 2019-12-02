@@ -20,9 +20,10 @@ php artisan vendor:publish --provider Netsells\GeoScope\GeoScopeServiceProvider
 
 ### Basic Usage
 
-GeoScope includes the `Netsells\GeoScope\Traits\GeoScopeTrait` that can be added your models. The trait contains two scopes,
+GeoScope includes the `Netsells\GeoScope\Traits\GeoScopeTrait` that can be added to your models. The trait contains two scopes,
 `withinDistanceOf` and `orWithinDistanceOf`. `withinDistanceOf` will add a `where` where clause to your query and `orWithinDistanceOf` 
-will add an `orWhere`. Both of these methods accept 3 parameters, a latitude, longitude and distance.
+will add an `orWhere`. Both of these methods accept 3 parameters, a latitude, longitude and distance. Both the latitude 
+and longitude should be given in degrees.
 
 ```php
 <?php
@@ -38,7 +39,7 @@ class Job extends Model
     //
 }
 ```
-the scopes can then be applied to any model queries:
+the scopes can then be applied to any model query:
 
 ```php
 
@@ -53,7 +54,7 @@ $jobs = Job::withinDistanceOf(53.957962, -1.085485, 20)
 
 ### Configuration
 
-When adding the `GeoScopeTrait` to your models you can define the latitude, longitude and distance units to be used by
+When adding the `GeoScopeTrait` to your model you can define the latitude, longitude and distance units to be used by
 the trait in the geoscope.php config file.
 
 ```php
@@ -66,7 +67,7 @@ the trait in the geoscope.php config file.
     ]
 ```
 
-Should you wish to use the scope for multiple latitude and longitude columns on the same model you can so so by creating
+Should you wish to use the scope for multiple latitude and longitude columns on the same model you can so by creating
 multiple configurations within the same model key.
 
 ```php
@@ -95,7 +96,7 @@ $jobs = Job::withinDistanceOf(53.957962, -1.085485, 20, 'location1')->get();
 $jobs2 = Job::withinDistanceOf(53.957962, -1.085485, 20, 'location1')
             ->orWithinDistanceOf(52.143542, -2.08556, 20, 'location2');
 ```
-You may also pass in an array of config items as the third parameter to both the `withinDistanceOf` and `orWithinDistanceOf` scopes.
+You may also pass in an array of config items as the fourth parameter to both the `withinDistanceOf` and `orWithinDistanceOf` scopes.
 ```php
 
 $jobs = Job::withinDistanceOf(53.957962, -1.085485, 20, [
@@ -110,4 +111,85 @@ $jobs2 = Job::withinDistanceOf(53.957962, -1.085485, 20, 'location1')
             ])->get();
 ```
 Any missing config options will be replaced with the defaults defined in `config('geoscope.defaults')`. 
-**Passing invalid config keys will also cause GeoScope to fallback to these defaults.**
+**Passing invalid config keys will also cause GeoScope to fallback to these defaults for all config fields.**
+
+### Scope Drivers
+Under the hood, GeoScope uses different drivers to ensure that the distance queries are optimised to the database connection 
+being used. Scope drivers correspond to the database drivers used by Laravel. GeoScope will automatically detect the database driver being used 
+by Laravel and choose the correct scope driver for it. Out of the box GeoScope includes two scope drivers, one for MySQL 
+which uses the built in ST_Distance_Sphere() function, and a default driver which uses an SQL based haversine calculation.
+GeoScope will fall back to the default driver is no database specific driver is registered.
+
+#### Creating Custom Scope Drivers
+GeoScope allows you to define and register custom scope drivers. To create a custom scope driver create a class that extends
+`Netsells\GeoScope\ScopeDrivers\AbstractScopeDriver` . The new driver must then implement the methods outlined in 
+`Netsells\GeoScope\Interfaces\ScopeDriverInterface` (below).
+
+```php
+<?php
+
+
+namespace Netsells\GeoScope\Interfaces;
+
+
+use Illuminate\Database\Eloquent\Builder;
+
+interface ScopeDriverInterface
+{
+    /**
+     * @param float $lat
+     * @param float $long
+     * @param float $distance
+     * @return Builder
+     */
+    public function withinDistanceOf(float $lat, float $long, float $distance): Builder;
+
+    /**
+     * @param float $lat
+     * @param float $long
+     * @param float $distance
+     * @return Builder
+     */
+    public function orWithinDistanceOf(float $lat, float $long, float $distance): Builder;
+}
+``` 
+The Eloquent Query Builder instance is available within your driver via the `$this->query` property.
+
+#### Registering Custom Scope Drivers
+Custom scope drivers can be registered using the `registerDriverStrategy` method on the `ScopeDriverFactory` class. 
+Registration should normally be done within the `register` method of a service provider.
+
+```php
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use Netsells\GeoScope\ScopeDriverFactory;
+use App\Services\GeoScope\ScopeDrivers\PostgreSQLScopeDriver;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        app(ScopeDriverFactory::class)->registerDriverStrategy('pgsql', PostgreSQLScopeDriver::class);
+    }
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        //
+    }
+}
+```
+
+**If you create a custom scope driver, please consider putting in a pull Request to add it to the package so it may be used by others.**

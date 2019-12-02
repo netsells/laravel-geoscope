@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Netsells\GeoScope\Tests\Unit;
-
 
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Builder;

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Netsells\GeoScope\Tests\Unit;
-
 
 use Mockery;
 use Netsells\GeoScope\Interfaces\ScopeDriverInterface;

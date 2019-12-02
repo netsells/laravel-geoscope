@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Netsells\GeoScope\Tests\Unit;
-
 
 use Netsells\GeoScope\Config\ConfigManager;
 

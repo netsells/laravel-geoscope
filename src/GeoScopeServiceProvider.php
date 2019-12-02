@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Netsells\GeoScope;
-
 
 use Illuminate\Support\ServiceProvider;
 

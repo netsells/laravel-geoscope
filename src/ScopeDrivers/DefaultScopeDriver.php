@@ -1,10 +1,9 @@
 <?php
 
-
 namespace Netsells\GeoScope\ScopeDrivers;
 
-
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\DB;
 use Netsells\GeoScope\GeoScope;
 
@@ -47,7 +46,7 @@ class DefaultScopeDriver extends AbstractScopeDriver
      * @param float $long
      * @return string
      */
-    private function getDistanceStatement(float $lat, float $long)
+    private function getDistanceStatement(float $lat, float $long): string
     {
         $lat = floatval($lat);
         $long = floatval($long);
@@ -72,7 +71,7 @@ SELECT;
      * @param float $long
      * @return \Illuminate\Database\Query\Expression
      */
-    private function getDbDistanceStatement(float $lat, float $long)
+    private function getDbDistanceStatement(float $lat, float $long): Expression
     {
         return DB::raw($this->getDistanceStatement($lat, $long));
     }
