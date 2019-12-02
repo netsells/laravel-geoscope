@@ -35,6 +35,7 @@ class GeoScope
         ])->getConfig();
 
         $this->setScopeDriver($query->getConnection()->getConfig('driver'));
+        $this->setScopeDriver('default');
     }
 
     /**
@@ -63,7 +64,7 @@ class GeoScope
      * @param $driver
      * @return $this
      */
-    protected function setScopeDriver($driver): GeoScope
+    protected function setScopeDriver(string $driver): GeoScope
     {
         $this->scopeDriver = app(ScopeDriverFactory::class)
             ->getStrategyInstance($driver)

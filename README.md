@@ -117,7 +117,7 @@ Any missing config options will be replaced with the defaults defined in `config
 Under the hood, GeoScope uses different drivers to ensure that the distance queries are optimised to the database connection 
 being used. Scope drivers correspond to the database drivers used by Laravel. GeoScope will automatically detect the database driver being used 
 by Laravel and choose the correct scope driver for it. Out of the box GeoScope includes two scope drivers, one for MySQL 
-which uses the built in ST_Distance_Sphere() function, and a default driver which uses an SQL based haversine calculation.
+which uses the built in `ST_Distance_Sphere()` function, and a default driver which uses an SQL based haversine calculation.
 GeoScope will fall back to the default driver is no database specific driver is registered.
 
 #### Creating Custom Scope Drivers

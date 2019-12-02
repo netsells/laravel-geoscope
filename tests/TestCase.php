@@ -9,7 +9,9 @@ abstract class TestCase extends BaseTestCase
 {
     protected function getPackageProviders($app)
     {
-        return [GeoScopeServiceProvider::class];
+        return [
+            GeoScopeServiceProvider::class,
+        ];
     }
 
     protected function setGeoScopeConfig(array $config = null, $model = null)
@@ -32,6 +34,5 @@ abstract class TestCase extends BaseTestCase
 
         $this->app->config->set("geoscope.defaults", $defaultConfig);
         $this->app->config->set("geoscope.models.{$modelName}", $config);
-
     }
 }
