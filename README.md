@@ -191,7 +191,7 @@ class AppServiceProvider extends ServiceProvider
     }
 }
 ```
-You may set an optional `scope-driver` config key is you wish to force a specific scope driver to be used.
+You may set an optional `scope-driver` config key if you wish to force a specific scope driver to be used.
 
 ```php
  'models' => [
