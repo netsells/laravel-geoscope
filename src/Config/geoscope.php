@@ -8,7 +8,7 @@ return [
     'defaults' => [
         'lat-column' => 'latitude',
         'long-column' => 'longitude',
-        'units' => 'miles' // miles, kilometers or meters,
+        'units' => 'miles', // miles, kilometers or meters,
     ],
 
     /*
@@ -18,7 +18,7 @@ return [
 //        SomeModel::class => [
 //            'lat-column' => 'custom-lat-column-name',
 //            'long-column' => 'custom-long-column-name',
-//            'units' => 'meters'
+//            'units' => 'meters',
 //        ]
 //    ],
 
