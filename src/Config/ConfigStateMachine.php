@@ -7,11 +7,13 @@ class ConfigStateMachine
     const CONFIG_FIELD_LATITUDE_COLUMN = 'lat-column';
     const CONFIG_FIELD_LONGITUDE_COLUMN = 'long-column';
     const CONFIG_FIELD_DISTANCE_UNITS = 'units';
+    const CONFIG_FIELD_SCOPE_DRIVER = 'scope-driver';
 
     const VALID_CONFIG_FIELDS = [
         self::CONFIG_FIELD_LATITUDE_COLUMN,
         self::CONFIG_FIELD_LONGITUDE_COLUMN,
         self::CONFIG_FIELD_DISTANCE_UNITS,
+        self::CONFIG_FIELD_SCOPE_DRIVER,
     ];
 
     protected $modelClass;

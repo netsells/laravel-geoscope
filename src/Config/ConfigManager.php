@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ConfigManager
 {
+    const OPTIONAL_CONFIG_FIELDS = [
+        'scope-driver'
+    ];
+
     protected $modelClass;
     protected $configOption;
 
@@ -76,9 +80,18 @@ class ConfigManager
     protected function getValidConfig(array $inputConfig): array
     {
         $validConfig = config('geoscope.defaults');
+
+        // Add all compulsory fields
         foreach ($validConfig as $key => $value) {
             if (array_key_exists($key, $inputConfig)) {
                 $validConfig[$key] = $inputConfig[$key];
+            }
+        }
+
+        // Add any optional fields that are present
+        foreach (self::OPTIONAL_CONFIG_FIELDS as $optionalField) {
+            if (array_key_exists($optionalField, $inputConfig)) {
+                $validConfig[$optionalField] = $inputConfig[$optionalField];
             }
         }
 
