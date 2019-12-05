@@ -191,5 +191,17 @@ class AppServiceProvider extends ServiceProvider
     }
 }
 ```
+You may set an optional `scope-driver` config key is you wish to force a specific scope driver to be used.
+
+```php
+ 'models' => [
+        App\Job::class => [
+           'lat-column' => 'custom-lat-column-name',
+           'long-column' => 'custom-long-column-name',
+           'units' => 'meters',
+           'scope-driver' => 'mysql'
+        ]
+    ]
+```
 
 **If you create a custom scope driver, please consider putting in a pull Request to add it to the package so it may be used by others.**
