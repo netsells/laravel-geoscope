@@ -4,7 +4,7 @@ namespace Netsells\GeoScope\ScopeDrivers;
 
 use Illuminate\Database\Eloquent\Builder;
 
-class MySQLScopeDriver extends AbstractScopeDriver
+final class MySQLScopeDriver extends AbstractScopeDriver
 {
     /**
      * @param float $lat
@@ -39,7 +39,7 @@ class MySQLScopeDriver extends AbstractScopeDriver
     /**
      * @return string
      */
-    protected function getSQL(): string
+    private function getSQL(): string
     {
         return <<<EOD
             ST_Distance_Sphere(

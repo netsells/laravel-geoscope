@@ -7,7 +7,7 @@ use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\DB;
 use Netsells\GeoScope\GeoScope;
 
-class DefaultScopeDriver extends AbstractScopeDriver
+final class DefaultScopeDriver extends AbstractScopeDriver
 {
     /**
      * @var array
