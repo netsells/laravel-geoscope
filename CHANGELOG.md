@@ -14,3 +14,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * [1.0.0](#400---2019-12-02) - Initial release
 * [1.1.0](#400---2019-12-05) - Adds ability to force scope driver in config
 * [1.1.1](#400---2019-12-31) - Removes default scope driver
+* [1.2.0](#400---2019-12-31) - Adds PostgreSQL scope driver

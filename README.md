@@ -117,7 +117,13 @@ Any missing config options will be replaced with the defaults defined in `config
 Under the hood, GeoScope uses different drivers to ensure that the distance queries are optimised to the database connection 
 being used. Scope drivers correspond to the database drivers used by Laravel. GeoScope will automatically detect the database driver being used 
 by Laravel and choose the correct scope driver for it. Out of the box GeoScope includes a MySQL scope driver
-which uses the built in `ST_Distance_Sphere()` function. 
+which uses `ST_Distance_Sphere()` function and a PostgreSQL scope driver which uses `earth_distance`.
+
+**NOTE: The PostgreSQL driver requires you to have the postgres `earthdistance` module installed which can be done by executing the following SQL**
+```sql
+create extension if not exists cube;
+create extension if not exists earthdistance;
+```
 
 #### Creating Custom Scope Drivers
 GeoScope allows you to define and register custom scope drivers. To create a custom scope driver create a class that extends

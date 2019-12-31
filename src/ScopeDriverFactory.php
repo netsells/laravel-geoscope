@@ -5,6 +5,7 @@ namespace Netsells\GeoScope;
 use Netsells\GeoScope\Exceptions\ScopeDriverNotFoundException;
 use Netsells\GeoScope\Interfaces\ScopeDriverInterface;
 use Netsells\GeoScope\ScopeDrivers\MySQLScopeDriver;
+use Netsells\GeoScope\ScopeDrivers\PostgreSQLScopeDriver;
 
 class ScopeDriverFactory
 {
@@ -13,6 +14,7 @@ class ScopeDriverFactory
      */
     protected $registeredStrategies = [
         'mysql' => MySQLScopeDriver::class,
+        'pgsql' => PostgreSQLScopeDriver::class,
     ];
 
     /**
