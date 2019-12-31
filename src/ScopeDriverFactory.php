@@ -2,8 +2,8 @@
 
 namespace Netsells\GeoScope;
 
+use Netsells\GeoScope\Exceptions\ScopeDriverNotFoundException;
 use Netsells\GeoScope\Interfaces\ScopeDriverInterface;
-use Netsells\GeoScope\ScopeDrivers\DefaultScopeDriver;
 use Netsells\GeoScope\ScopeDrivers\MySQLScopeDriver;
 
 class ScopeDriverFactory
@@ -12,13 +12,13 @@ class ScopeDriverFactory
      * @var array
      */
     protected $registeredStrategies = [
-        'default' => DefaultScopeDriver::class,
         'mysql' => MySQLScopeDriver::class,
     ];
 
     /**
      * @param $key
      * @return ScopeDriverInterface
+     * @throws ScopeDriverNotFoundException
      */
     public function getStrategyInstance($key): ScopeDriverInterface
     {
@@ -27,9 +27,7 @@ class ScopeDriverFactory
             return $strategy;
         }
 
-        // If there is no driver registered for the DB
-        // Then we'll fall back to the default
-        return new $this->registeredStrategies['default'];
+        throw new ScopeDriverNotFoundException("No registered scope driver for {$key} connection");
     }
 
     /**

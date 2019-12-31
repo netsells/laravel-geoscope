@@ -21,7 +21,7 @@ php artisan vendor:publish --provider Netsells\GeoScope\GeoScopeServiceProvider
 ### Basic Usage
 
 GeoScope includes the `Netsells\GeoScope\Traits\GeoScopeTrait` that can be added to your models. The trait contains two scopes,
-`withinDistanceOf` and `orWithinDistanceOf`. `withinDistanceOf` will add a `where` where clause to your query and `orWithinDistanceOf` 
+`withinDistanceOf` and `orWithinDistanceOf`. `withinDistanceOf` will add a `where` clause to your query and `orWithinDistanceOf` 
 will add an `orWhere`. Both of these methods accept 3 parameters, a latitude, longitude and distance. Both the latitude 
 and longitude should be given in degrees.
 
@@ -67,7 +67,7 @@ the trait in the geoscope.php config file.
     ]
 ```
 
-Should you wish to use the scope for multiple latitude and longitude columns on the same model you can so by creating
+Should you wish to use the scope for multiple latitude and longitude columns on the same model you can do so by creating
 multiple configurations within the same model key.
 
 ```php
@@ -116,9 +116,8 @@ Any missing config options will be replaced with the defaults defined in `config
 ### Scope Drivers
 Under the hood, GeoScope uses different drivers to ensure that the distance queries are optimised to the database connection 
 being used. Scope drivers correspond to the database drivers used by Laravel. GeoScope will automatically detect the database driver being used 
-by Laravel and choose the correct scope driver for it. Out of the box GeoScope includes two scope drivers, one for MySQL 
-which uses the built in `ST_Distance_Sphere()` function, and a default driver which uses an SQL based haversine calculation.
-GeoScope will fall back to the default driver is no database specific driver is registered.
+by Laravel and choose the correct scope driver for it. Out of the box GeoScope includes a MySQL scope driver
+which uses the built in `ST_Distance_Sphere()` function. 
 
 #### Creating Custom Scope Drivers
 GeoScope allows you to define and register custom scope drivers. To create a custom scope driver create a class that extends

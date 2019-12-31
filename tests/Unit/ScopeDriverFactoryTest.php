@@ -27,20 +27,6 @@ class ScopeDriverFactoryTest extends UnitTestCase
     /**
      * @test
      */
-    public function factory_can_create_default_driver()
-    {
-        $factory = app(ScopeDriverFactory::class);
-
-        $expected = DefaultScopeDriver::class;
-
-        $actual = get_class($factory->getStrategyInstance('default'));
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     * @test
-     */
     public function factory_can_register_a_custom_driver()
     {
         $factory = app(ScopeDriverFactory::class);
