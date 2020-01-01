@@ -5,7 +5,7 @@ namespace Netsells\GeoScope\Tests\Integration\ScopeDrivers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Netsells\GeoScope\Tests\Integration\ScopeDrivers\Traits\ScopeDriverDatabaseTests;
 
-class MySQLScopeDriverTest extends BaseScopeDriverTest
+class PostgreSQLScopeDriverTest extends BaseScopeDriverTest
 {
     use RefreshDatabase, ScopeDriverDatabaseTests;
 
@@ -15,8 +15,8 @@ class MySQLScopeDriverTest extends BaseScopeDriverTest
     {
         parent::setUp();
 
-        $this->scopeDriver = $this->getScopeDriver('mysql');
-        $this->sqlSnippet = "ST_Distance_Sphere";
+        $this->scopeDriver = $this->getScopeDriver('pgsql');
+        $this->sqlSnippet = "earth_distance";
     }
 
     /**
@@ -31,12 +31,11 @@ class MySQLScopeDriverTest extends BaseScopeDriverTest
 
         // Setup default database to use mysql test
         $app['config']->set('database.connections.testing', [
-            'driver' => 'mysql',
+            'driver' => 'pgsql',
             'host' => 'localhost',
-            'database' => env('MYSQL_DB_DATABASE'),
-            'username' => env('MYSQL_DB_USERNAME'),
-            'password' => env('MYSQL_DB_PASSWORD'),
-            'port' => '3306',
+            'database' => env('PGSQL_DB_DATABASE'),
+            'username' => env('PGSQL_DB_USERNAME'),
+            'password' => env('PGSQL_DB_PASSWORD'),
         ]);
     }
 }

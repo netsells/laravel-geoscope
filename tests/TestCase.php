@@ -2,6 +2,7 @@
 
 namespace Netsells\GeoScope\Tests;
 
+use Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables;
 use Netsells\GeoScope\GeoScopeServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
@@ -34,5 +35,13 @@ abstract class TestCase extends BaseTestCase
 
         $this->app->config->set("geoscope.defaults", $defaultConfig);
         $this->app->config->set("geoscope.models.{$modelName}", $config);
+    }
+
+    protected function getEnvironmentSetUp($app)
+    {
+        // make sure, our .env file is loaded
+        $app->useEnvironmentPath(__DIR__.'/..');
+        $app->bootstrapWith([LoadEnvironmentVariables::class]);
+        parent::getEnvironmentSetUp($app);
     }
 }

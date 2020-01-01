@@ -2,6 +2,7 @@
 
 namespace Netsells\GeoScope\Tests\Integration\ScopeDrivers;
 
+use Illuminate\Support\Collection;
 use Netsells\GeoScope\GeoScope;
 use Netsells\GeoScope\ScopeDriverFactory;
 use Netsells\GeoScope\Tests\Integration\IntegrationTestCase;
@@ -19,9 +20,10 @@ abstract class ScopeDriverTestCase extends IntegrationTestCase
 
     protected function getScopeDriver(string $driverKey, array $config = null)
     {
-        if(!$config){
+        if (!$config) {
             $config = config('geoscope.defaults');
         }
+
         return app(ScopeDriverFactory::class)
             ->getStrategyInstance($driverKey)
             ->setQuery($this->query)
