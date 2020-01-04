@@ -25,6 +25,7 @@ class GeoScope
      * GeoScope constructor.
      * @param Builder $query
      * @param null $configOption
+     * @throws Exceptions\InvalidConfigException
      */
     public function __construct(Builder $query, $configOption = null)
     {
@@ -83,7 +84,11 @@ class GeoScope
         return $this;
     }
 
-    private function checkValidLatLongColumns(string $table)
+    /**
+     * @param string $table
+     * @throws Exceptions\InvalidConfigException
+     */
+    private function checkValidLatLongColumns(string $table): void
     {
         TableFieldValidator::validate($table, $this->config['lat-column']);
         TableFieldValidator::validate($table, $this->config['long-column']);
