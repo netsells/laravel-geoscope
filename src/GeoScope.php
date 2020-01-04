@@ -4,6 +4,7 @@ namespace Netsells\GeoScope;
 
 use Illuminate\Database\Eloquent\Builder;
 use Netsells\GeoScope\Config\ConfigManager;
+use Netsells\GeoScope\Validators\TableFieldValidator;
 
 class GeoScope
 {
@@ -33,6 +34,8 @@ class GeoScope
             'query' => $query,
             'configOption' => $configOption,
         ])->getConfig();
+
+        $this->checkValidLatLongColumns($this->query->getModel()->getTable());
 
         $this->setScopeDriver();
     }
@@ -79,5 +82,10 @@ class GeoScope
 
         return $this;
     }
-}
 
+    private function checkValidLatLongColumns(string $table)
+    {
+        TableFieldValidator::validate($table, $this->config['lat-column']);
+        TableFieldValidator::validate($table, $this->config['long-column']);
+    }
+}

@@ -4,7 +4,7 @@ namespace Netsells\GeoScope\ScopeDrivers;
 
 use Illuminate\Database\Eloquent\Builder;
 
-final class PostgreSQLScopeDriver extends AbstractScopeDriver
+final class SQLServerScopeDriver extends AbstractScopeDriver
 {
     /**
      * @param float $lat
@@ -42,10 +42,9 @@ final class PostgreSQLScopeDriver extends AbstractScopeDriver
     private function getSQL(): string
     {
         return <<<EOD
-            earth_distance(
-                ll_to_earth({$this->config['lat-column']}, {$this->config['long-column']}),
-                ll_to_earth(?, ?)
-             ) * {$this->conversion} < ?
+            (GEOGRAPHY::Point(?, ?, 4326)
+            .STDistance(GEOGRAPHY::Point({$this->config["lat-column"]}, {$this->config["long-column"]}, 4326))) 
+            * {$this->conversion} < ?
 EOD;
     }
 }

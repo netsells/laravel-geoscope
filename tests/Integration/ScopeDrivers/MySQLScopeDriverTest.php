@@ -7,7 +7,8 @@ use Netsells\GeoScope\Tests\Integration\ScopeDrivers\Traits\ScopeDriverDatabaseT
 
 class MySQLScopeDriverTest extends BaseScopeDriverTest
 {
-    use RefreshDatabase, ScopeDriverDatabaseTests;
+    use RefreshDatabase;
+    use ScopeDriverDatabaseTests;
 
     protected $scopeDriver;
 

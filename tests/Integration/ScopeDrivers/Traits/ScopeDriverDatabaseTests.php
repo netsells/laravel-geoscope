@@ -4,6 +4,7 @@ namespace Netsells\GeoScope\Tests\Integration\ScopeDrivers\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Netsells\GeoScope\Exceptions\InvalidConfigException;
 use Netsells\GeoScope\Tests\Test;
 
 trait ScopeDriverDatabaseTests
@@ -18,7 +19,7 @@ trait ScopeDriverDatabaseTests
         factory(Test::class, 30)->create();
         $expected = $this->createNearbyModels(20);
 
-        $actual = Test::withinDistanceOf($centralPoint['latitude'], $centralPoint['longitude'], 10)->get();
+        $actual = Test::withinDistanceOf($centralPoint['latitude'], $centralPoint['longitude'], 1)->get();
 
         $this->assertEquals(20, $actual->count());
         $this->assertEqualCollections($expected, $actual);
@@ -113,6 +114,93 @@ trait ScopeDriverDatabaseTests
         $this->assertTrue(in_array($long, $bindings));
         $this->assertTrue(in_array($dist, $bindings));
         $this->assertTrue(in_array(1, $bindings));
+    }
+
+    /**
+     * @test
+     */
+    public function custom_config_items_can_be_set_for_within_distance_of()
+    {
+        $centralPoint = $this->getLatLongs()->get('central_point');
+
+        factory(Test::class, 30)->create();
+
+        $expected = $this->createNearbyModels(20);
+        $actual1 = Test::withinDistanceOf($centralPoint['latitude'], $centralPoint['longitude'], 10)->get();
+
+        $this->assertEquals(20, $actual1->count());
+        $this->assertEqualCollections($expected, $actual1);
+
+        $actual2 = Test::withinDistanceOf($centralPoint['latitude'], $centralPoint['longitude'], 1600, [
+            'units' => 'meters'
+        ])->get();
+
+        $this->assertEquals(20, $actual2->count());
+        $this->assertEqualCollections($expected, $actual2);
+    }
+
+    /**
+     * @test
+     */
+    public function invalid_lat_column_name_for_within_distance_of_throws_an_exception()
+    {
+        $this->expectException(InvalidConfigException::class);
+
+        $centralPoint = $this->getLatLongs()->get('central_point');
+
+        factory(Test::class, 30)->create();
+
+        Test::withinDistanceOf($centralPoint['latitude'], $centralPoint['longitude'], 1600, [
+            'lat-column' => 'invalid lat column'
+        ])->get();
+    }
+
+    /**
+     * @test
+     */
+    public function invalid_long_column_name_for_within_distance_of_throws_an_exception()
+    {
+        $this->expectException(InvalidConfigException::class);
+
+        $centralPoint = $this->getLatLongs()->get('central_point');
+
+        factory(Test::class, 30)->create();
+
+        Test::withinDistanceOf($centralPoint['latitude'], $centralPoint['longitude'], 1600, [
+            'long-column' => 'invalid long column'
+        ])->get();
+    }
+
+    /**
+     * @test
+     */
+    public function invalid_lat_column_name_for_or_within_distance_of_throws_an_exception()
+    {
+        $this->expectException(InvalidConfigException::class);
+
+        $centralPoint = $this->getLatLongs()->get('central_point');
+
+        factory(Test::class, 30)->create();
+
+        Test::orWithinDistanceOf($centralPoint['latitude'], $centralPoint['longitude'], 1600, [
+            'lat-column' => 'invalid lat column'
+        ])->get();
+    }
+
+    /**
+     * @test
+     */
+    public function invalid_long_column_name_for_or_within_distance_of_throws_an_exception()
+    {
+        $this->expectException(InvalidConfigException::class);
+
+        $centralPoint = $this->getLatLongs()->get('central_point');
+
+        factory(Test::class, 30)->create();
+
+        Test::orWithinDistanceOf($centralPoint['latitude'], $centralPoint['longitude'], 1600, [
+            'long-column' => 'invalid long column'
+        ])->get();
     }
 
     protected function assertEqualCollections(Collection $collection1, Collection $collection2)

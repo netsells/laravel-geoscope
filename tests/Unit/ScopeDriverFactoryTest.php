@@ -5,8 +5,9 @@ namespace Netsells\GeoScope\Tests\Unit;
 use Mockery;
 use Netsells\GeoScope\Interfaces\ScopeDriverInterface;
 use Netsells\GeoScope\ScopeDriverFactory;
-use Netsells\GeoScope\ScopeDrivers\DefaultScopeDriver;
 use Netsells\GeoScope\ScopeDrivers\MySQLScopeDriver;
+use Netsells\GeoScope\ScopeDrivers\PostgreSQLScopeDriver;
+use Netsells\GeoScope\ScopeDrivers\SQLServerScopeDriver;
 
 class ScopeDriverFactoryTest extends UnitTestCase
 {
@@ -15,13 +16,23 @@ class ScopeDriverFactoryTest extends UnitTestCase
      */
     public function factory_can_create_mysql_driver()
     {
-        $factory = app(ScopeDriverFactory::class);
+        $this->scopeDriverCreationTest(MySQLScopeDriver::class, 'mysql');
+    }
 
-        $expected = MySQLScopeDriver::class;
+    /**
+     * @test
+     */
+    public function factory_can_create_postgres_driver()
+    {
+        $this->scopeDriverCreationTest(PostgreSQLScopeDriver::class, 'pgsql');
+    }
 
-        $actual = get_class($factory->getStrategyInstance('mysql'));
-
-        $this->assertEquals($expected, $actual);
+    /**
+     * @test
+     */
+    public function factory_can_create_sqlserver_driver()
+    {
+        $this->scopeDriverCreationTest(SQLServerScopeDriver::class, 'sqlsrv');
     }
 
     /**
@@ -38,5 +49,14 @@ class ScopeDriverFactoryTest extends UnitTestCase
         $actual = get_class($factory->getStrategyInstance('custom'));
 
         $this->assertEquals($expected, $actual);
+    }
+
+    public function scopeDriverCreationTest(string $scopeDriverClassName, string $factoryKey)
+    {
+        $factory = app(ScopeDriverFactory::class);
+
+        $actual = get_class($factory->getStrategyInstance($factoryKey));
+
+        $this->assertEquals($scopeDriverClassName, $actual);
     }
 }

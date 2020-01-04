@@ -11,7 +11,6 @@ class GeoScopeServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/Config/geoscope.php' => config_path('geoscope.php'),
         ]);
-
     }
 
     public function register()
@@ -19,7 +18,5 @@ class GeoScopeServiceProvider extends ServiceProvider
         $this->app->singleton(ScopeDriverFactory::class, function () {
             return new ScopeDriverFactory();
         });
-
     }
-
 }
