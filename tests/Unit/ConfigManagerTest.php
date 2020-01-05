@@ -2,7 +2,7 @@
 
 namespace Netsells\GeoScope\Tests\Unit;
 
-use Netsells\GeoScope\Config\ConfigManager;
+use Netsells\GeoScope\Config\Managers\EloquentBuilderConfigManager;
 
 class ConfigManagerTest extends UnitTestCase
 {
@@ -166,7 +166,7 @@ class ConfigManagerTest extends UnitTestCase
 
     private function getConfigManager($configOption = null)
     {
-        return app(ConfigManager::class, [
+        return app(EloquentBuilderConfigManager::class, [
             'query' => $this->query,
             'configOption' => $configOption
         ]);

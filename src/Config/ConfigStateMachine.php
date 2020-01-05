@@ -24,7 +24,7 @@ class ConfigStateMachine
      * @param $modelClass
      * @param $configOption
      */
-    public function __construct($modelClass, $configOption)
+    public function __construct($configOption, $modelClass = null)
     {
         $this->modelClass = $modelClass;
         $this->configOption = $configOption;

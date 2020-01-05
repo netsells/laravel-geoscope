@@ -135,28 +135,28 @@ GeoScope allows you to define and register custom scope drivers. To create a cus
 
 namespace Netsells\GeoScope\Interfaces;
 
-use Illuminate\Database\Eloquent\Builder;
-
 interface ScopeDriverInterface
 {
     /**
      * @param float $lat
      * @param float $long
      * @param float $distance
-     * @return Builder
+     * @return mixed
+     * Should return query instance
      */
-    public function withinDistanceOf(float $lat, float $long, float $distance): Builder;
+    public function withinDistanceOf(float $lat, float $long, float $distance);
 
     /**
      * @param float $lat
      * @param float $long
      * @param float $distance
-     * @return Builder
+     * @return mixed
+     * Should return query instance
      */
-    public function orWithinDistanceOf(float $lat, float $long, float $distance): Builder;
+    public function orWithinDistanceOf(float $lat, float $long, float $distance);
 }
 ``` 
-The Eloquent Query Builder instance is available within your driver via the `$this->query` property.
+The Query Builder instance is available within your driver via the `$this->query` property.
 
 #### Registering Custom Scope Drivers
 Custom scope drivers can be registered using the `registerDriverStrategy` method on the `ScopeDriverFactory` class. 

@@ -3,8 +3,8 @@
 namespace Netsells\GeoScope\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
+use Netsells\GeoScope\BuilderScopes\EloquentBuilderScope;
 use Netsells\GeoScope\Exceptions\InvalidConfigException;
-use Netsells\GeoScope\GeoScope;
 
 trait GeoScopeTrait
 {
@@ -24,7 +24,7 @@ trait GeoScopeTrait
         float $distance,
         $configOption = null
     ) {
-        return app(GeoScope::class, [
+        return app(EloquentBuilderScope::class, [
             'query' => $query,
             'configOption' => $configOption,
         ])->withinDistanceOf($lat, $long, $distance);
@@ -46,7 +46,7 @@ trait GeoScopeTrait
         float $distance,
         $configOption = null
     ) {
-        return app(GeoScope::class, [
+        return app(EloquentBuilderScope::class, [
             'query' => $query,
             'configOption' => $configOption,
         ])->orWithinDistanceOf($lat, $long, $distance);

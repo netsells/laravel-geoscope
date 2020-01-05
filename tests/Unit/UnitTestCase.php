@@ -6,7 +6,7 @@ use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Mockery;
-use Netsells\GeoScope\GeoScope;
+use Netsells\GeoScope\BuilderScopes\EloquentBuilderScope;
 use Netsells\GeoScope\Tests\TestCase;
 
 abstract class UnitTestCase extends TestCase
@@ -27,7 +27,7 @@ abstract class UnitTestCase extends TestCase
 
         $query = $this->getBuilderMock($driver, $model);
 
-        return app(GeoScope::class, [
+        return app(EloquentBuilderScope::class, [
             'query' => $query,
         ]);
     }

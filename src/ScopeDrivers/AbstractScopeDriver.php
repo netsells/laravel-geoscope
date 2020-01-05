@@ -2,7 +2,6 @@
 
 namespace Netsells\GeoScope\ScopeDrivers;
 
-use Illuminate\Database\Eloquent\Builder;
 use Netsells\GeoScope\Interfaces\ScopeDriverInterface;
 
 abstract class AbstractScopeDriver implements ScopeDriverInterface
@@ -32,10 +31,9 @@ abstract class AbstractScopeDriver implements ScopeDriverInterface
     }
 
     /**
-     * @param Builder $query
      * @return $this
      */
-    public function setQuery(Builder $query): AbstractScopeDriver
+    public function setQuery($query): AbstractScopeDriver
     {
         $this->query = $query;
         return $this;

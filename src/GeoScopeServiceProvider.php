@@ -2,7 +2,9 @@
 
 namespace Netsells\GeoScope;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\ServiceProvider;
+use Netsells\GeoScope\BuilderScopes\DatabaseBuilderBuilderScope;
 
 class GeoScopeServiceProvider extends ServiceProvider
 {
@@ -11,6 +13,30 @@ class GeoScopeServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/Config/geoscope.php' => config_path('geoscope.php'),
         ]);
+
+        Builder::macro('withinDistanceOf', function (
+            float $lat,
+            float $long,
+            float $distance,
+            $configOption = null
+        ) {
+            return app(DatabaseBuilderBuilderScope::class, [
+                'query' => $this,
+                'configOption' => $configOption,
+            ])->withinDistanceOf($lat, $long, $distance);
+        });
+
+        Builder::macro('orWithinDistanceOf', function (
+            float $lat,
+            float $long,
+            float $distance,
+            $configOption = null
+        ) {
+            return app(DatabaseBuilderBuilderScope::class, [
+                'query' => $this,
+                'configOption' => $configOption,
+            ])->orWithinDistanceOf($lat, $long, $distance);
+        });
     }
 
     public function register()

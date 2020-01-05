@@ -2,8 +2,7 @@
 
 namespace Netsells\GeoScope\Tests\Integration\ScopeDrivers;
 
-use Illuminate\Support\Collection;
-use Netsells\GeoScope\GeoScope;
+use Netsells\GeoScope\BuilderScopes\EloquentBuilderScope;
 use Netsells\GeoScope\ScopeDriverFactory;
 use Netsells\GeoScope\Tests\Integration\IntegrationTestCase;
 use Netsells\GeoScope\Tests\Test;
@@ -27,7 +26,7 @@ abstract class ScopeDriverTestCase extends IntegrationTestCase
         return app(ScopeDriverFactory::class)
             ->getStrategyInstance($driverKey)
             ->setQuery($this->query)
-            ->setConversion(GeoScope::DISTANCE_CONVERSION_FROM_METERS[$config['units']])
+            ->setConversion(EloquentBuilderScope::DISTANCE_CONVERSION_FROM_METERS[$config['units']])
             ->setConfig($config);
     }
 }

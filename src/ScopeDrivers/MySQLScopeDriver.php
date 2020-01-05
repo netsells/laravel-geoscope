@@ -2,17 +2,14 @@
 
 namespace Netsells\GeoScope\ScopeDrivers;
 
-use Illuminate\Database\Eloquent\Builder;
-
 final class MySQLScopeDriver extends AbstractScopeDriver
 {
     /**
      * @param float $lat
      * @param float $long
      * @param float $distance
-     * @return Builder
      */
-    public function withinDistanceOf(float $lat, float $long, float $distance): Builder
+    public function withinDistanceOf(float $lat, float $long, float $distance)
     {
         return $this->query->whereRaw($this->getSQL(), [
             $long,
@@ -25,9 +22,8 @@ final class MySQLScopeDriver extends AbstractScopeDriver
      * @param float $lat
      * @param float $long
      * @param float $distance
-     * @return Builder
      */
-    public function orWithinDistanceOf(float $lat, float $long, float $distance): Builder
+    public function orWithinDistanceOf(float $lat, float $long, float $distance)
     {
         return $this->query->orWhereRaw($this->getSQL(), [
             $long,

@@ -2,23 +2,23 @@
 
 namespace Netsells\GeoScope\Interfaces;
 
-use Illuminate\Database\Eloquent\Builder;
-
 interface ScopeDriverInterface
 {
     /**
      * @param float $lat
      * @param float $long
      * @param float $distance
-     * @return Builder
+     * @return mixed
+     * Should return query instance
      */
-    public function withinDistanceOf(float $lat, float $long, float $distance): Builder;
+    public function withinDistanceOf(float $lat, float $long, float $distance);
 
     /**
      * @param float $lat
      * @param float $long
      * @param float $distance
-     * @return Builder
+     * @return mixed
+     * Should return query instance
      */
-    public function orWithinDistanceOf(float $lat, float $long, float $distance): Builder;
+    public function orWithinDistanceOf(float $lat, float $long, float $distance);
 }

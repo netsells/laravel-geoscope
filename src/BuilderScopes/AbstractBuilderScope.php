@@ -1,12 +1,11 @@
 <?php
 
-namespace Netsells\GeoScope;
+namespace Netsells\GeoScope\BuilderScopes;
 
-use Illuminate\Database\Eloquent\Builder;
-use Netsells\GeoScope\Config\ConfigManager;
+use Netsells\GeoScope\ScopeDriverFactory;
 use Netsells\GeoScope\Validators\TableFieldValidator;
 
-class GeoScope
+abstract class AbstractBuilderScope
 {
     const DISTANCE_UNITS_MILES = 'miles';
     const DISTANCE_UNITS_METERS = 'meters';
@@ -20,24 +19,16 @@ class GeoScope
 
     protected $scopeDriver;
     protected $config;
+    protected $query;
+    protected $table;
 
     /**
-     * GeoScope constructor.
-     * @param Builder $query
-     * @param null $configOption
-     * @throws Exceptions\InvalidConfigException
+     * AbstractBuilderScope constructor.
+     * @throws \Netsells\GeoScope\Exceptions\InvalidConfigException
      */
-    public function __construct(Builder $query, $configOption = null)
+    public function __construct()
     {
-        $this->query = $query;
-
-        $this->config = app(ConfigManager::class, [
-            'query' => $query,
-            'configOption' => $configOption,
-        ])->getConfig();
-
-        $this->checkValidLatLongColumns($this->query->getModel()->getTable());
-
+        $this->checkValidLatLongColumns($this->table);
         $this->setScopeDriver();
     }
 
@@ -47,7 +38,7 @@ class GeoScope
      * @param float $distance
      * @return mixed
      */
-    public function withinDistanceOf(float $lat, float $long, float $distance): Builder
+    public function withinDistanceOf(float $lat, float $long, float $distance)
     {
         return $this->scopeDriver->withinDistanceOf($lat, $long, $distance);
     }
@@ -58,7 +49,7 @@ class GeoScope
      * @param float $distance
      * @return mixed
      */
-    public function orWithinDistanceOf(float $lat, float $long, float $distance): Builder
+    public function orWithinDistanceOf(float $lat, float $long, float $distance)
     {
         return $this->scopeDriver->orWithinDistanceOf($lat, $long, $distance);
     }
@@ -67,7 +58,7 @@ class GeoScope
      * @param $driver
      * @return $this
      */
-    protected function setScopeDriver(): GeoScope
+    protected function setScopeDriver(): AbstractBuilderScope
     {
         if (!array_key_exists('scope-driver', $this->config) || !$this->config['scope-driver']) {
             $driver = $this->query->getConnection()->getConfig('driver');
@@ -86,7 +77,7 @@ class GeoScope
 
     /**
      * @param string $table
-     * @throws Exceptions\InvalidConfigException
+     * @throws \Netsells\GeoScope\Exceptions\InvalidConfigException
      */
     private function checkValidLatLongColumns(string $table): void
     {
