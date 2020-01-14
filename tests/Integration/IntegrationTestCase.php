@@ -3,7 +3,6 @@
 namespace Netsells\GeoScope\Tests\Integration;
 
 use Netsells\GeoScope\GeoScope;
-use Netsells\GeoScope\ScopeDriverFactory;
 use Netsells\GeoScope\Tests\TestCase;
 
 abstract class IntegrationTestCase extends TestCase

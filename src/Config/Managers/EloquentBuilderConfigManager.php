@@ -15,7 +15,7 @@ class EloquentBuilderConfigManager extends AbstractConfigManager
      * @param Builder $query
      * @param $configOption
      */
-    public function __construct(Builder $query, $configOption = null)
+    public function __construct(Builder $query, string $table, $configOption = null)
     {
         $this->modelClass = get_class($query->getModel());
         $this->configOption = $configOption;
@@ -24,6 +24,8 @@ class EloquentBuilderConfigManager extends AbstractConfigManager
             'configOption' => $configOption,
             'modelClass' => $this->modelClass,
         ]);
+
+        parent::__construct($table);
     }
 
     /**
@@ -43,7 +45,7 @@ class EloquentBuilderConfigManager extends AbstractConfigManager
             return $this->getCustomConfig();
         }
 
-        return config('geoscope.defaults');
+        return $this->getDefaultConfig();
     }
 
     /**

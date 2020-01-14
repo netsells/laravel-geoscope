@@ -20,9 +20,8 @@ final class EloquentBuilderScope extends AbstractBuilderScope
         $this->config = app(EloquentBuilderConfigManager::class, [
             'query' => $this->query,
             'configOption' => $configOption,
+            'table' => $this->query->getModel()->getTable(),
         ])->getConfig();
-
-        $this->table = $this->query->getModel()->getTable();
 
         parent::__construct();
     }

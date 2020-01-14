@@ -3,7 +3,6 @@
 namespace Netsells\GeoScope\BuilderScopes;
 
 use Netsells\GeoScope\ScopeDriverFactory;
-use Netsells\GeoScope\Validators\TableFieldValidator;
 
 abstract class AbstractBuilderScope
 {
@@ -20,7 +19,6 @@ abstract class AbstractBuilderScope
     protected $scopeDriver;
     protected $config;
     protected $query;
-    protected $table;
 
     /**
      * AbstractBuilderScope constructor.
@@ -28,7 +26,6 @@ abstract class AbstractBuilderScope
      */
     public function __construct()
     {
-        $this->checkValidLatLongColumns($this->table);
         $this->setScopeDriver();
     }
 
@@ -73,15 +70,5 @@ abstract class AbstractBuilderScope
             ->setConfig($this->config);
 
         return $this;
-    }
-
-    /**
-     * @param string $table
-     * @throws \Netsells\GeoScope\Exceptions\InvalidConfigException
-     */
-    private function checkValidLatLongColumns(string $table): void
-    {
-        TableFieldValidator::validate($table, $this->config['lat-column']);
-        TableFieldValidator::validate($table, $this->config['long-column']);
     }
 }

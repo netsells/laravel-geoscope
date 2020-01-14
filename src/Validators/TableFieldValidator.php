@@ -12,12 +12,30 @@ class TableFieldValidator
      * @param $column
      * @throws InvalidConfigException
      */
-    public static function validate(string $table, $column): void
+    public function validate(string $table, $column): void
     {
-        $hasColumn = Schema::hasColumn($table, $column);
+        $columnName = $this->getColumnName($table, $column);
+
+        $hasColumn = Schema::hasColumn($table, $columnName);
 
         if (!$hasColumn) {
-            throw new InvalidConfigException("{$table} has no column named {$column}");
+            throw new InvalidConfigException("{$table} has no column named {$columnName}");
         }
+    }
+
+    /**
+     * @param string $table
+     * @param string $column
+     * @return mixed|string
+     */
+    private function getColumnName(string $table, string $column)
+    {
+        $explodedColumn = explode('.', $column);
+
+        if ($explodedColumn[0] == $table) {
+            return $explodedColumn[1];
+        }
+
+        return $column;
     }
 }

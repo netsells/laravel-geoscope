@@ -113,6 +113,27 @@ $jobs2 = Job::withinDistanceOf(53.957962, -1.085485, 20, 'location1')
 Any missing config options will be replaced with the defaults defined in `config('geoscope.defaults')`. 
 **Passing invalid config keys will also cause GeoScope to fallback to these defaults for all config fields.**
 
+## Database Query Builder
+Geoscope also allows you to call the `withinDistanceOf()` and `orWithinDistanceOf()` directly off the DB query builder:
+
+```php
+    $results =  DB::table('users')
+                    ->withinDistanceOf(30.1234, -71.2176, 20)
+                    ->join('jobs', 'jobs.user_id', '=', 'users.id')
+                    ->get();
+```
+
+if you wish to alter the config options then you may pass an array as the fourth parameter to the `withinDistanceOf()` 
+and `orWithinDistanceOf()` methods:
+
+```php
+    $results =  DB::table('users')->withinDistanceOf(30.1234, -71.2176, 20, [
+                         'lat-column' => 'lat-column-1',
+                         'long-column' => 'long-column-1',
+                         'units' => 'meters'
+                    ])->get();
+```
+
 ### Scope Drivers
 Under the hood, GeoScope uses different drivers to ensure that the distance queries are optimised to the database connection 
 being used. Scope drivers correspond to the database drivers used by Laravel. GeoScope will automatically detect the database driver being used 

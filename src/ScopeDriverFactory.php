@@ -42,4 +42,12 @@ class ScopeDriverFactory
     {
         $this->registeredStrategies[$key] = $strategy;
     }
+
+    /**
+     * @return array
+     */
+    public function getRegisteredScopeDrivers(): array
+    {
+        return $this->registeredStrategies;
+    }
 }

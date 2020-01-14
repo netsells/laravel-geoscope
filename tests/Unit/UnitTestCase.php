@@ -5,6 +5,8 @@ namespace Netsells\GeoScope\Tests\Unit;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\MySqlBuilder;
+use Illuminate\Support\Facades\Schema;
 use Mockery;
 use Netsells\GeoScope\BuilderScopes\EloquentBuilderScope;
 use Netsells\GeoScope\Tests\TestCase;
@@ -65,6 +67,18 @@ abstract class UnitTestCase extends TestCase
      */
     protected function getModelMock($modelName)
     {
-        return Mockery::mock($modelName, Model::class);
+        $mock = Mockery::mock($modelName, Model::class);
+
+        $mock->shouldReceive('getTable')
+            ->andReturn('test_table');
+
+        return $mock;
+    }
+
+    protected function setMySqlBuilderMock()
+    {
+        Mockery::mock(MySqlBuilder::class)
+            ->shouldReceive('hasColumn')
+            ->andReturnTrue();
     }
 }

@@ -20,9 +20,8 @@ final class DatabaseBuilderBuilderScope extends AbstractBuilderScope
         $this->config = app(DatabaseBuilderConfigManager::class, [
             'query' => $this->query,
             'configOption' => $configOption,
+            'table' => $this->query->from,
         ])->getConfig();
-
-        $this->table = $this->query->from;
 
         parent::__construct();
     }

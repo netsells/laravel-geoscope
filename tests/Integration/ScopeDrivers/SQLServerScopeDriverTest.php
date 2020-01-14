@@ -3,12 +3,12 @@
 namespace Netsells\GeoScope\Tests\Integration\ScopeDrivers;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Netsells\GeoScope\Tests\Integration\ScopeDrivers\Traits\ScopeDriverDatabaseTests;
+use Netsells\GeoScope\Tests\Integration\ScopeDrivers\Traits\ScopeDriverTests;
 
 class SQLServerScopeDriverTest extends BaseScopeDriverTest
 {
     use RefreshDatabase;
-    use ScopeDriverDatabaseTests;
+    use ScopeDriverTests;
 
     protected $scopeDriver;
 
@@ -33,10 +33,11 @@ class SQLServerScopeDriverTest extends BaseScopeDriverTest
         // Setup default database to use mysql test
         $app['config']->set('database.connections.testing', [
             'driver' => 'sqlsrv',
-            'host' => 'localhost',
+            'host' => env('SQLSRV_DB_HOST'),
             'database' => env('SQLSRV_DB_DATABASE'),
             'username' => env('SQLSRV_DB_USERNAME'),
             'password' => env('SQLSRV_DB_PASSWORD'),
+            'port' => env('SQLSRV_DB_PORT'),
             'prefix' => '',
         ]);
     }
