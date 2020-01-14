@@ -17,3 +17,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * [1.2.0](#400---2019-12-31) - Adds PostgreSQL scope driver
 * [1.2.1](#400---2019-12-31) - Minor postgres bug fix
 * [1.3.0](#400---2020-01-04) - Improves tests coverage and adds SQL Server driver
+* [1.4.0](#400---2020-01-14) - Adds support for DB builder
