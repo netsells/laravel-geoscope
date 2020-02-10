@@ -1,6 +1,7 @@
 <?php
 
 return [
+
     /*
      * default column names that GeoScope will use
      * if none are stated for a model
@@ -21,6 +22,5 @@ return [
 //            'units' => 'meters',
 //        ]
 //    ],
-
 
 ];

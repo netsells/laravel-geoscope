@@ -13,7 +13,7 @@ $ composer require netsells/laravel-geo-scope
 
 Then publish the config file using the following artisan command:
 ```
-php artisan vendor:publish --provider Netsells\GeoScope\GeoScopeServiceProvider
+php artisan vendor:publish --tag=geoscope
 ```
 
 ## Usage

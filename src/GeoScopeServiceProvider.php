@@ -12,7 +12,7 @@ class GeoScopeServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/Config/geoscope.php' => config_path('geoscope.php'),
-        ]);
+        ], 'geoscope');
 
         Builder::macro('withinDistanceOf', function (
             float $lat,
