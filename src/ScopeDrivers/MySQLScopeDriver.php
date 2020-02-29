@@ -33,6 +33,16 @@ final class MySQLScopeDriver extends AbstractScopeDriver
     }
 
     /**
+     * @param float $lat
+     * @param float $long
+     * @param float $orderDirection
+     */
+    public function orderByDistanceFrom(float $lat, float $long, string $orderDirection = 'asc')
+    {
+        return $this->query;
+    }
+
+    /**
      * @return string
      */
     private function getSQL(): string

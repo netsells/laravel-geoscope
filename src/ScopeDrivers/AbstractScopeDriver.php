@@ -2,10 +2,13 @@
 
 namespace Netsells\GeoScope\ScopeDrivers;
 
+use Netsells\GeoScope\Exceptions\InvalidOrderDirectionParameter;
 use Netsells\GeoScope\Interfaces\ScopeDriverInterface;
 
 abstract class AbstractScopeDriver implements ScopeDriverInterface
 {
+    protected const ALLOWED_ORDER_DIRECTION_IDENTIFIERS = ['asc', 'desc'];
+
     protected $config;
     protected $query;
     protected $conversion;
@@ -37,5 +40,16 @@ abstract class AbstractScopeDriver implements ScopeDriverInterface
     {
         $this->query = $query;
         return $this;
+    }
+
+    /**
+     * @throws InvalidOrderDirectionParameter
+     * @return void
+     */
+    protected function checkOrderDirectionIdentifier(string $orderDirection): void
+    {
+        if (!in_array($orderDirection, $this->ALLOWED_ORDER_DIRECTION_IDENTIFIERS)) {
+            throw new InvalidOrderDirectionParameter("{$orderDirection} is not a valid order direction");
+        }
     }
 }
