@@ -48,7 +48,7 @@ abstract class AbstractScopeDriver implements ScopeDriverInterface
      */
     protected function checkOrderDirectionIdentifier(string $orderDirection): void
     {
-        if (!in_array($orderDirection, $this->ALLOWED_ORDER_DIRECTION_IDENTIFIERS)) {
+        if (!in_array($orderDirection, self::ALLOWED_ORDER_DIRECTION_IDENTIFIERS)) {
             throw new InvalidOrderDirectionParameter("{$orderDirection} is not a valid order direction");
         }
     }

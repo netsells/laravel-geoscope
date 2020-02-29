@@ -11,7 +11,7 @@ final class MySQLScopeDriver extends AbstractScopeDriver
      */
     public function withinDistanceOf(float $lat, float $long, float $distance)
     {
-        return $this->query->whereRaw($this->getSQL(), [
+        return $this->query->whereRaw($this->getWithinDistanceSQL(), [
             $long,
             $lat,
             $distance,
@@ -25,7 +25,7 @@ final class MySQLScopeDriver extends AbstractScopeDriver
      */
     public function orWithinDistanceOf(float $lat, float $long, float $distance)
     {
-        return $this->query->orWhereRaw($this->getSQL(), [
+        return $this->query->orWhereRaw($this->getWithinDistanceSQL(), [
             $long,
             $lat,
             $distance,
@@ -33,25 +33,44 @@ final class MySQLScopeDriver extends AbstractScopeDriver
     }
 
     /**
+     * @throws InvalidOrderDirectionParameter
      * @param float $lat
      * @param float $long
      * @param float $orderDirection
      */
     public function orderByDistanceFrom(float $lat, float $long, string $orderDirection = 'asc')
     {
-        return $this->query;
+        $this->checkOrderDirectionIdentifier($orderDirection);
+
+        return $this->query->orderByRaw($this->getOrderByDistanceSQL($orderDirection), [
+            $long,
+            $lat,
+        ]);
     }
 
     /**
      * @return string
      */
-    private function getSQL(): string
+    private function getWithinDistanceSQL(): string
     {
         return <<<EOD
             ST_Distance_Sphere(
                     point({$this->config['long-column']}, {$this->config['lat-column']}),
                     point(?, ?)
                 ) * {$this->conversion} < ?
+EOD;
+    }
+
+    /**
+     * @return string
+     */
+    private function getOrderByDistanceSQL(string $orderDirection): string
+    {
+        return <<<EOD
+            ST_Distance_Sphere(
+                    point({$this->config['long-column']}, {$this->config['lat-column']}),
+                    point(?, ?)
+                ) * {$this->conversion} {$orderDirection}
 EOD;
     }
 }

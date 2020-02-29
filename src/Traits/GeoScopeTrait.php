@@ -51,4 +51,23 @@ trait GeoScopeTrait
             'configOption' => $configOption,
         ])->orWithinDistanceOf($lat, $long, $distance);
     }
+
+     /**
+     * @param Builder $query
+     * @param float $lat
+     * @param float $long
+     * @param float $orderDirection
+     * @return mixed
+     * @throws InvalidOrderDirectionParameter
+     */
+    public function scopeOrderByDistanceFrom(
+        Builder $query,
+        float $lat,
+        float $long,
+        string $orderDirection = 'asc'
+    ) {
+        return app(EloquentBuilderScope::class, [
+            'query' => $query,
+        ])->orderByDistanceFrom($lat, $long, $orderDirection);
+    }
 }

@@ -49,6 +49,21 @@ trait ScopeDriverEloquentBuilderTests
     /**
      * @test
      */
+    public function order_by_distance_from_returns_correct_results()
+    {
+        $centralPoint = $this->getLatLongs()->get('central_point');
+
+        factory(Test::class, 30)->create();
+
+        $results1 = Test::orderByDistanceFrom($centralPoint['latitude'], $centralPoint['longitude'], 'asc')->get();
+        $results2 = Test::orderByDistanceFrom($centralPoint['latitude'], $centralPoint['longitude'], 'desc')->get();
+
+        $this->assertEquals($results1->pluck('id'), $results2->reverse()->pluck('id'));
+    }
+
+    /**
+     * @test
+     */
     public function custom_config_items_can_be_set_for_within_distance_of()
     {
         $centralPoint = $this->getLatLongs()->get('central_point');

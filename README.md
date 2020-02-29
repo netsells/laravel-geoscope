@@ -23,7 +23,7 @@ php artisan vendor:publish --tag=geoscope
 GeoScope includes the `Netsells\GeoScope\Traits\GeoScopeTrait` that can be added to your models. The trait contains two scopes,
 `withinDistanceOf` and `orWithinDistanceOf`. `withinDistanceOf` will add a `where` clause to your query and `orWithinDistanceOf` 
 will add an `orWhere`. Both of these methods accept 3 parameters, a latitude, longitude and distance. Both the latitude 
-and longitude should be given in degrees.
+and longitude should be given in degrees. GeoScope with then use these to query against the specified lat long fields on that model.
 
 ```php
 <?php

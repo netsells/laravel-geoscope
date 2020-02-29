@@ -11,7 +11,7 @@ final class PostgreSQLScopeDriver extends AbstractScopeDriver
      */
     public function withinDistanceOf(float $lat, float $long, float $distance)
     {
-        return $this->query->whereRaw($this->getSQL(), [
+        return $this->query->whereRaw($this->getWithinDistanceSQL(), [
             $lat,
             $long,
             $distance,
@@ -25,7 +25,7 @@ final class PostgreSQLScopeDriver extends AbstractScopeDriver
      */
     public function orWithinDistanceOf(float $lat, float $long, float $distance)
     {
-        return $this->query->orWhereRaw($this->getSQL(), [
+        return $this->query->orWhereRaw($this->getWithinDistanceSQL(), [
             $lat,
             $long,
             $distance,
@@ -33,15 +33,44 @@ final class PostgreSQLScopeDriver extends AbstractScopeDriver
     }
 
     /**
+     * @throws InvalidOrderDirectionParameter
+     * @param float $lat
+     * @param float $long
+     * @param float $orderDirection
+     */
+    public function orderByDistanceFrom(float $lat, float $long, string $orderDirection = 'asc')
+    {
+        $this->checkOrderDirectionIdentifier($orderDirection);
+
+        return $this->query->orderByRaw($this->getOrderByDistanceSQL($orderDirection), [
+            $long,
+            $lat,
+        ]);
+    }
+
+    /**
      * @return string
      */
-    private function getSQL(): string
+    private function getWithinDistanceSQL(): string
     {
         return <<<EOD
             earth_distance(
                 ll_to_earth({$this->config['lat-column']}, {$this->config['long-column']}),
                 ll_to_earth(?, ?)
              ) * {$this->conversion} < ?
+EOD;
+    }
+
+    /**
+     * @return string
+     */
+    private function getOrderByDistanceSQL(string $orderDirection): string
+    {
+        return <<<EOD
+            earth_distance(
+                ll_to_earth({$this->config['lat-column']}, {$this->config['long-column']}),
+                ll_to_earth(?, ?)
+             ) * {$this->conversion} {$orderDirection}
 EOD;
     }
 }

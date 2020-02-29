@@ -3,14 +3,15 @@
 namespace Netsells\GeoScope\BuilderScopes;
 
 use Netsells\GeoScope\ScopeDriverFactory;
+use Netsells\GeoScope\Exceptions\InvalidOrderDirectionParameter;
 
 abstract class AbstractBuilderScope
 {
-    const DISTANCE_UNITS_MILES = 'miles';
-    const DISTANCE_UNITS_METERS = 'meters';
-    const DISTANCE_UNITS_KILOMETERS = 'kilometers';
+    private const DISTANCE_UNITS_MILES = 'miles';
+    private const DISTANCE_UNITS_METERS = 'meters';
+    private const DISTANCE_UNITS_KILOMETERS = 'kilometers';
 
-    const DISTANCE_CONVERSION_FROM_METERS = [
+    public const DISTANCE_CONVERSION_FROM_METERS = [
         self::DISTANCE_UNITS_MILES => 0.000621371,
         self::DISTANCE_UNITS_METERS => 1,
         self::DISTANCE_UNITS_KILOMETERS => 0.001
@@ -49,6 +50,15 @@ abstract class AbstractBuilderScope
     public function orWithinDistanceOf(float $lat, float $long, float $distance)
     {
         return $this->scopeDriver->orWithinDistanceOf($lat, $long, $distance);
+    }
+
+    /**
+     * @throws InvalidOrderDirectionParameter
+     * @return mixed
+     */
+    public function orderByDistanceFrom(float $lat, float $long, string $orderDirection = 'asc')
+    {
+        return $this->scopeDriver->orderByDistanceFrom($lat, $long, $orderDirection);
     }
 
     /**
