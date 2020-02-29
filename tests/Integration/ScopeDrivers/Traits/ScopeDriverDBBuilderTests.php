@@ -50,4 +50,19 @@ trait ScopeDriverDBBuilderTests
         $this->assertEquals($expected[19]->id, $actual[19]->id);
         $this->assertEquals($expected[34]->id, $actual[34]->id);
     }
+
+    /**
+     * @test
+     */
+    public function builder_macro_order_by_distance_from_returns_correct_results()
+    {
+        $centralPoint = $this->getLatLongs()->get('central_point');
+
+        factory(Test::class, 30)->create();
+
+        $results1 = DB::table('tests')->orderByDistanceFrom($centralPoint['latitude'], $centralPoint['longitude'], 'asc')->get();
+        $results2 = DB::table('tests')->orderByDistanceFrom($centralPoint['latitude'], $centralPoint['longitude'], 'desc')->get();
+
+        $this->assertEquals($results1->pluck('id'), $results2->reverse()->pluck('id'));
+    }
 }

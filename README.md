@@ -113,8 +113,18 @@ $jobs2 = Job::withinDistanceOf(53.957962, -1.085485, 20, 'location1')
 Any missing config options will be replaced with the defaults defined in `config('geoscope.defaults')`. 
 **Passing invalid config keys will also cause GeoScope to fallback to these defaults for all config fields.**
 
+GeoScope also includes an `orderByDistanceFrom()` method that allows you to sort results by their distance from a specified lat long.
+
+```php
+    // order by distance in ascending order
+    $results =  Job::orderByDistanceFrom(30.1234, -71.2176, 'asc')->get();
+
+    // order by distance in descending order
+    $results =  Job::orderByDistanceFrom(30.1234, -71.2176, 'desc')->get();
+```
+
 ## Database Query Builder
-Geoscope also allows you to call the `withinDistanceOf()` and `orWithinDistanceOf()` directly off the DB query builder:
+Geoscope also allows you to call the `withinDistanceOf()`, `orWithinDistanceOf()` and `orderByDistanceFrom()` methods directly off the DB query builder:
 
 ```php
     $results =  DB::table('users')
@@ -133,6 +143,12 @@ and `orWithinDistanceOf()` methods:
                          'units' => 'meters'
                     ])->get();
 ```
+order by distance example:
+
+```php
+    $results =  DB::table('users')->orderByDistanceFrom(30.1234, -71.2176, 'asc')->get();
+```
+
 
 ### Scope Drivers
 Under the hood, GeoScope uses different drivers to ensure that the distance queries are optimised to the database connection 
