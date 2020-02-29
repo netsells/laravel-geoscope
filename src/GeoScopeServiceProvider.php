@@ -37,6 +37,16 @@ class GeoScopeServiceProvider extends ServiceProvider
                 'configOption' => $configOption,
             ])->orWithinDistanceOf($lat, $long, $distance);
         });
+
+        Builder::macro('orderByDistanceFrom', function (
+            float $lat,
+            float $long,
+            $orderDirection = 'asc'
+        ) {
+            return app(DatabaseBuilderBuilderScope::class, [
+                'query' => $this,
+            ])->orderByDistanceFrom($lat, $long, $orderDirection);
+        });
     }
 
     public function register()
