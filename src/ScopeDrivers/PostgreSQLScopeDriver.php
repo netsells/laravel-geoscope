@@ -43,8 +43,8 @@ final class PostgreSQLScopeDriver extends AbstractScopeDriver
         $this->checkOrderDirectionIdentifier($orderDirection);
 
         return $this->query->orderByRaw($this->getOrderByDistanceSQL($orderDirection), [
-            $long,
             $lat,
+            $long,
         ]);
     }
 
