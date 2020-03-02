@@ -15,12 +15,10 @@ return [
     /*
      * Register model specific settings here
      */
-//    'models' => [
-//        SomeModel::class => [
-//            'lat-column' => 'custom-lat-column-name',
-//            'long-column' => 'custom-long-column-name',
-//            'units' => 'meters',
-//        ]
-//    ],
+    'models' => [],
+
+    /**
+     * Register whitelisted addDistanceFrom() field
+     */
 
 ];
