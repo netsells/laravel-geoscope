@@ -2,9 +2,10 @@
 
 namespace Netsells\GeoScope\Tests\Integration\ScopeDrivers\Traits;
 
-use Illuminate\Support\Facades\DB;
 use Netsells\GeoScope\Tests\Test;
+use Illuminate\Support\Facades\DB;
 use Netsells\GeoScope\Tests\Test2;
+use Netsells\GeoScope\Exceptions\InvalidDistanceFieldNameException;
 
 trait ScopeDriverDBBuilderTests
 {

@@ -11,6 +11,7 @@ abstract class AbstractConfigManager implements ConfigManagerInterface
     const CONFIG_FIELD_LONGITUDE_COLUMN = 'long-column';
     const CONFIG_FIELD_DISTANCE_UNITS = 'units';
     const CONFIG_FIELD_SCOPE_DRIVER = 'scope-driver';
+    const CONFIG_FIELD_WHITELISTED_DISTANCE_FIELD_NAMES = 'whitelisted-distance-from-field-names';
 
     const OPTIONAL_CONFIG_FIELDS = [
         'scope-driver'
@@ -22,6 +23,8 @@ abstract class AbstractConfigManager implements ConfigManagerInterface
     public function __construct(string $table)
     {
         $this->table = $table;
+        $this->config = config('geoscope.defaults');
+        $this->config[self::CONFIG_FIELD_WHITELISTED_DISTANCE_FIELD_NAMES] = config('geoscope.' . self::CONFIG_FIELD_WHITELISTED_DISTANCE_FIELD_NAMES);
     }
 
     /**
@@ -30,23 +33,21 @@ abstract class AbstractConfigManager implements ConfigManagerInterface
      */
     protected function getValidConfig(array $inputConfig): array
     {
-        $config = config('geoscope.defaults');
-
         // Add all compulsory fields
-        foreach ($config as $key => $value) {
+        foreach ($this->config as $key => $value) {
             if (array_key_exists($key, $inputConfig)) {
-                $config[$key] = $inputConfig[$key];
+                $this->config[$key] = $inputConfig[$key];
             }
         }
 
         // Add any optional fields that are present
         foreach (self::OPTIONAL_CONFIG_FIELDS as $optionalField) {
             if (array_key_exists($optionalField, $inputConfig)) {
-                $config[$optionalField] = $inputConfig[$optionalField];
+                $this->config[$optionalField] = $inputConfig[$optionalField];
             }
         }
 
-        return app(ConfigSanitizer::class)->getSanitizedConfig($config, $this->table);
+        return app(ConfigSanitizer::class)->getSanitizedConfig($this->config, $this->table);
     }
 
     /**
@@ -62,6 +63,6 @@ abstract class AbstractConfigManager implements ConfigManagerInterface
      */
     protected function getDefaultConfig(): array
     {
-        return app(ConfigSanitizer::class)->getSanitizedConfig(config("geoscope.defaults"), $this->table);
+        return app(ConfigSanitizer::class)->getSanitizedConfig($this->config, $this->table);
     }
 }

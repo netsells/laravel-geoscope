@@ -123,6 +123,66 @@ GeoScope also includes an `orderByDistanceFrom()` method that allows you to sort
     $results =  Job::orderByDistanceFrom(30.1234, -71.2176, 'desc')->get();
 ```
 
+### The `addDistanceFrom()` method
+
+A field can be added to each returned result with the calculated distance from the given lat long using the `addDistanceFromField()` method.
+
+```php
+    $results =  Job::addDistanceFromField(30.1234, -71.2176)->get();
+```
+
+before `addDistanceFrom()` is applied
+
+```json
+{
+    "id": 1,
+    "email": "vita.frami@example.com",
+    "latitude": 39.95,
+    "longitude": -76.74,
+    "created_at": "2020-02-29 19:13:08",
+    "updated_at": "2020-02-29 19:13:08",
+}
+```
+
+After `addDistanceFrom()` is applied
+```json
+{
+    "id": 1,
+    "email": "vita.frami@example.com",
+    "latitude": 39.95,
+    "longitude": -76.74,
+    "created_at": "2020-02-29 19:13:08",
+    "updated_at": "2020-02-29 19:13:08",
+    "distance": 0.2,
+    "dist_units": "miles"
+}
+```
+
+A custom field name can be third parameter can be passed to the `addDistanceFrom()` method if the name has been registered in the `whitelisted-distance-from-field-names` array of the geoscope.php config file. The distance field will have a default name of `distance` and the units field will have a default name of `distance_units` **The `addDistanceFromField()` method is only available through the GeoScopeTrait. It is not available on the database builder**
+
+```php
+   'whitelisted-distance-from-field-names' => [
+       'custom_field_name'
+   ]
+```
+
+```php
+    $results =  Job::addDistanceFromField(30.1234, -71.2176, 'custom_field_name')->get();
+```
+
+```json
+{
+    "id": 1,
+    "email": "vita.frami@example.com",
+    "latitude": 39.95,
+    "longitude": -76.74,
+    "created_at": "2020-02-29 19:13:08",
+    "updated_at": "2020-02-29 19:13:08",
+    "custom_field_name": 0.2,
+    "custom_field_name_units": "miles"
+}
+```
+
 ## Database Query Builder
 Geoscope also allows you to call the `withinDistanceOf()`, `orWithinDistanceOf()` and `orderByDistanceFrom()` methods directly off the DB query builder:
 

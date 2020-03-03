@@ -18,7 +18,11 @@ return [
     'models' => [],
 
     /**
-     * Register whitelisted addDistanceFrom() field
+     * Register whitelisted addDistanceFromField() third parameter values (field names) here
+     * Defaults to 'distance' if not set
      */
+    'whitelisted-distance-from-field-names' => [
+        'distance'
+    ],
 
 ];

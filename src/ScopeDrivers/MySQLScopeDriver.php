@@ -2,6 +2,9 @@
 
 namespace Netsells\GeoScope\ScopeDrivers;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
+
 final class MySQLScopeDriver extends AbstractScopeDriver
 {
     /**
@@ -42,10 +45,27 @@ final class MySQLScopeDriver extends AbstractScopeDriver
     {
         $this->checkOrderDirectionIdentifier($orderDirection);
 
-        return $this->query->orderByRaw($this->getOrderByDistanceSQL($orderDirection), [
+        return $this->query->orderByRaw(DB::raw($this->getOrderByDistanceSQL($orderDirection)), [
             $long,
             $lat,
         ]);
+    }
+
+    /**
+     * @param float $lat
+     * @param float $long
+     * @param float $orderDirection
+     */
+    public function addDistanceFromField(float $lat, float $long, ?string $fieldName = null)
+    {
+        $fieldName = $this->getValidFieldName($fieldName);
+
+        $this->query->select();
+
+        return $this->query->selectRaw($this->getSelectDistanceSQL($fieldName), [
+            $long,
+            $lat,
+        ])->selectRaw("'{$this->config['units']}' as {$fieldName}_units");
     }
 
     /**
@@ -71,6 +91,19 @@ EOD;
                     point({$this->config['long-column']}, {$this->config['lat-column']}),
                     point(?, ?)
                 ) * {$this->conversion} {$orderDirection}
+EOD;
+    }
+
+    /**
+     * @return string
+     */
+    private function getSelectDistanceSQL(string $fieldName): string
+    {
+        return <<<EOD
+            ROUND(ST_Distance_Sphere(
+                    point({$this->config['long-column']}, {$this->config['lat-column']}),
+                    point(?, ?)
+                ) * {$this->conversion}, 2) as {$fieldName}
 EOD;
     }
 }

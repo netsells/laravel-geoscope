@@ -30,4 +30,13 @@ interface ScopeDriverInterface
      * Should return query instance
      */
     public function orderByDistanceFrom(float $lat, float $long, string $orderDirection = 'asc');
+
+    /**
+     * @param float $lat
+     * @param float $long
+     * @param string $fieldName
+     * @return mixed
+     * Should return query instance
+     */
+    public function addDistanceFromField(float $lat, float $long, string $fieldName);
 }

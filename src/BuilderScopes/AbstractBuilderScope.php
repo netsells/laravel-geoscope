@@ -61,6 +61,15 @@ abstract class AbstractBuilderScope
         return $this->scopeDriver->orderByDistanceFrom($lat, $long, $orderDirection);
     }
 
+     /**
+     * @throws InvalidOrderDirectionParameter
+     * @return mixed
+     */
+    public function addDistanceFromField(float $lat, float $long, string $fieldName = null)
+    {
+        return $this->scopeDriver->addDistanceFromField($lat, $long, $fieldName);
+    }
+
     /**
      * @param $driver
      * @return $this

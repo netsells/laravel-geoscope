@@ -8,12 +8,14 @@ class ConfigStateMachine
     const CONFIG_FIELD_LONGITUDE_COLUMN = 'long-column';
     const CONFIG_FIELD_DISTANCE_UNITS = 'units';
     const CONFIG_FIELD_SCOPE_DRIVER = 'scope-driver';
+    const CONFIG_FIELD_VALID_DISTANCE_FILED_NAMES = 'whitelisted-distance-from-field-names';
 
     const VALID_CONFIG_FIELDS = [
         self::CONFIG_FIELD_LATITUDE_COLUMN,
         self::CONFIG_FIELD_LONGITUDE_COLUMN,
         self::CONFIG_FIELD_DISTANCE_UNITS,
         self::CONFIG_FIELD_SCOPE_DRIVER,
+        self::CONFIG_FIELD_VALID_DISTANCE_FILED_NAMES,
     ];
 
     protected $modelClass;

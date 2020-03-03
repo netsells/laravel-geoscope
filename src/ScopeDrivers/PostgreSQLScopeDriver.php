@@ -2,6 +2,8 @@
 
 namespace Netsells\GeoScope\ScopeDrivers;
 
+use Illuminate\Database\Eloquent\Builder;
+
 final class PostgreSQLScopeDriver extends AbstractScopeDriver
 {
     /**
@@ -49,6 +51,23 @@ final class PostgreSQLScopeDriver extends AbstractScopeDriver
     }
 
     /**
+     * @param float $lat
+     * @param float $long
+     * @param string $fieldName
+     */
+    public function addDistanceFromField(float $lat, float $long, ?string $fieldName = null)
+    {
+        $fieldName = $this->getValidFieldName($fieldName);
+       
+        $this->query->select('*');
+
+        return $this->query->selectRaw($this->getSelectDistanceSQL($fieldName), [
+            $lat,
+            $long,
+        ])->selectRaw("'{$this->config['units']}' as {$fieldName}_units");
+    }
+
+    /**
      * @return string
      */
     private function getWithinDistanceSQL(): string
@@ -71,6 +90,19 @@ EOD;
                 ll_to_earth({$this->config['lat-column']}, {$this->config['long-column']}),
                 ll_to_earth(?, ?)
              ) * {$this->conversion} {$orderDirection}
+EOD;
+    }
+
+    /**
+     * @return string
+     */
+    private function getSelectDistanceSQL(string $fieldName): string
+    {
+        return <<<EOD
+            earth_distance(
+                ll_to_earth({$this->config['lat-column']}, {$this->config['long-column']}),
+                ll_to_earth(?, ?)
+             ) * {$this->conversion} as {$fieldName}
 EOD;
     }
 }

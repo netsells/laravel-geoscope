@@ -52,7 +52,7 @@ trait GeoScopeTrait
         ])->orWithinDistanceOf($lat, $long, $distance);
     }
 
-     /**
+    /**
      * @param Builder $query
      * @param float $lat
      * @param float $long
@@ -69,5 +69,22 @@ trait GeoScopeTrait
         return app(EloquentBuilderScope::class, [
             'query' => $query,
         ])->orderByDistanceFrom($lat, $long, $orderDirection);
+    }
+
+    /**
+     * @param Builder $query
+     * @param float $lat
+     * @param float $long
+     * @return mixed
+     */
+    public function scopeAddDistanceFromField(
+        Builder $query,
+        float $lat,
+        float $long,
+        string $fieldName = null
+    ) {
+        return app(EloquentBuilderScope::class, [
+            'query' => $query,
+        ])->addDistanceFromField($lat, $long, $fieldName);
     }
 }

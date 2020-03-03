@@ -3,6 +3,7 @@
 namespace Netsells\GeoScope\Tests\Integration\ScopeDrivers\Traits;
 
 use Netsells\GeoScope\Exceptions\InvalidConfigException;
+use Netsells\GeoScope\Exceptions\InvalidDistanceFieldNameException;
 use Netsells\GeoScope\Exceptions\ScopeDriverNotFoundException;
 use Netsells\GeoScope\Tests\Test;
 
@@ -59,6 +60,24 @@ trait ScopeDriverEloquentBuilderTests
         $results2 = Test::orderByDistanceFrom($centralPoint['latitude'], $centralPoint['longitude'], 'desc')->get();
 
         $this->assertEquals($results1->pluck('id'), $results2->reverse()->pluck('id'));
+    }
+
+    /**
+     * @test
+     */
+    public function add_distance_from_field_is_applied_correctly()
+    {
+        $centralPoint = $this->getLatLongs()->get('central_point');
+
+        factory(Test::class, 30)->create();
+
+        $results = Test::addDistanceFromField($centralPoint['latitude'], $centralPoint['longitude'])->get();
+
+        $distanceField = $results->random()->distance;
+        $distanceUnits = $results->random()->distance_units;
+
+        $this->assertTrue(is_numeric($distanceField));
+        $this->assertEquals($distanceUnits, 'miles');
     }
 
     /**

@@ -12,11 +12,12 @@ use Netsells\GeoScope\Validators\UnitsFieldValidator;
 
 class ConfigSanitizer
 {
-    const VALID_CONFIG_FIELDS = [
+    private const VALID_CONFIG_FIELDS = [
         AbstractConfigManager::CONFIG_FIELD_LATITUDE_COLUMN,
         AbstractConfigManager::CONFIG_FIELD_LONGITUDE_COLUMN,
         AbstractConfigManager::CONFIG_FIELD_DISTANCE_UNITS,
         AbstractConfigManager::CONFIG_FIELD_SCOPE_DRIVER,
+        AbstractConfigManager::CONFIG_FIELD_WHITELISTED_DISTANCE_FIELD_NAMES,
     ];
 
     /**
@@ -63,7 +64,6 @@ class ConfigSanitizer
 
         app(UnitsFieldValidator::class)
             ->validate($config[AbstractConfigManager::CONFIG_FIELD_DISTANCE_UNITS]);
-
     }
 
     /**

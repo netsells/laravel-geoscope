@@ -2,6 +2,8 @@
 
 namespace Netsells\GeoScope\ScopeDrivers;
 
+use Illuminate\Database\Eloquent\Builder;
+
 final class SQLServerScopeDriver extends AbstractScopeDriver
 {
     /**
@@ -48,6 +50,23 @@ final class SQLServerScopeDriver extends AbstractScopeDriver
         ]);
     }
 
+      /**
+     * @param float $lat
+     * @param float $long
+     * @param string $fieldName
+     */
+    public function addDistanceFromField(float $lat, float $long, ?string $fieldName = null)
+    {
+        $fieldName = $this->getValidFieldName($fieldName);
+
+        $this->query->select('*');
+
+        return $this->query->selectRaw($this->getSelectDistanceSQL($fieldName), [
+            $lat,
+            $long,
+        ])->selectRaw("'{$this->config['units']}' as {$fieldName}_units");
+    }
+
     /**
      * @return string
      */
@@ -69,6 +88,18 @@ EOD;
             (GEOGRAPHY::Point(?, ?, 4326)
             .STDistance(GEOGRAPHY::Point({$this->config["lat-column"]}, {$this->config["long-column"]}, 4326))) 
             * {$this->conversion} {$orderDirection}
+EOD;
+    }
+
+    /**
+     * @return string
+     */
+    private function getSelectDistanceSQL(string $fieldName): string
+    {
+        return <<<EOD
+           (GEOGRAPHY::Point(?, ?, 4326)
+            .STDistance(GEOGRAPHY::Point({$this->config["lat-column"]}, {$this->config["long-column"]}, 4326))) 
+            * {$this->conversion} as {$fieldName}
 EOD;
     }
 }

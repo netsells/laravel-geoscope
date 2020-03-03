@@ -41,7 +41,7 @@ class GeoScopeServiceProvider extends ServiceProvider
         Builder::macro('orderByDistanceFrom', function (
             float $lat,
             float $long,
-            $orderDirection = 'asc'
+            string $orderDirection = 'asc'
         ) {
             return app(DatabaseBuilderBuilderScope::class, [
                 'query' => $this,
