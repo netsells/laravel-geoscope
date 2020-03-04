@@ -158,7 +158,9 @@ After `addDistanceFrom()` is applied
 }
 ```
 
-A custom field name can be third parameter can be passed to the `addDistanceFrom()` method if the name has been registered in the `whitelisted-distance-from-field-names` array of the geoscope.php config file. The distance field will have a default name of `distance` and the units field will have a default name of `distance_units` **The `addDistanceFromField()` method is only available through the GeoScopeTrait. It is not available on the database builder**
+A custom field name can be passed as the third argument to the `addDistanceFrom()` method if the name has been registered in the `whitelisted-distance-from-field-names` array of the geoscope.php config file. The distance field will have a default name of `distance` and the units field will have a default name of `distance_units`. 
+
+**The `addDistanceFromField()` method is only available through the GeoScopeTrait. It is not available on the database builder**
 
 ```php
    'whitelisted-distance-from-field-names' => [
@@ -260,9 +262,18 @@ interface ScopeDriverInterface
      * Should return query instance
      */
     public function orderByDistanceFrom(float $lat, float $long, string $orderDirection = 'asc');
+
+     /**
+     * @param float $lat
+     * @param float $long
+     * @param string $fieldName
+     * @return mixed
+     * Should return query instance
+     */
+    public function addDistanceFromField(float $lat, float $long, string $fieldName);
 }
 ``` 
-The Query Builder instance is available within your driver via the `$this->query` property.
+The Query Builder instance is available within your driver via the `$this->query` property, any config options passed will be available via the `$this->config` property.
 
 #### Registering Custom Scope Drivers
 Custom scope drivers can be registered using the `registerDriverStrategy` method on the `ScopeDriverFactory` class. 
