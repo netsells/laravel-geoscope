@@ -3,8 +3,9 @@
 namespace Netsells\GeoScope\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
-use Netsells\GeoScope\BuilderScopes\EloquentBuilderScope;
 use Netsells\GeoScope\Exceptions\InvalidConfigException;
+use Netsells\GeoScope\BuilderScopes\EloquentBuilderScope;
+use Netsells\GeoScope\Exceptions\InvalidDistanceFieldNameException;
 
 trait GeoScopeTrait
 {
@@ -53,12 +54,12 @@ trait GeoScopeTrait
     }
 
     /**
+     * @throws InvalidOrderDirectionParameter
      * @param Builder $query
      * @param float $lat
      * @param float $long
      * @param float $orderDirection
      * @return mixed
-     * @throws InvalidOrderDirectionParameter
      */
     public function scopeOrderByDistanceFrom(
         Builder $query,
@@ -72,6 +73,7 @@ trait GeoScopeTrait
     }
 
     /**
+     * @throws InvalidDistanceFieldNameException
      * @param Builder $query
      * @param float $lat
      * @param float $long

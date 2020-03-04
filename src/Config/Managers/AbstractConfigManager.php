@@ -7,13 +7,13 @@ use Netsells\GeoScope\Interfaces\ConfigManagerInterface;
 
 abstract class AbstractConfigManager implements ConfigManagerInterface
 {
-    const CONFIG_FIELD_LATITUDE_COLUMN = 'lat-column';
-    const CONFIG_FIELD_LONGITUDE_COLUMN = 'long-column';
-    const CONFIG_FIELD_DISTANCE_UNITS = 'units';
-    const CONFIG_FIELD_SCOPE_DRIVER = 'scope-driver';
-    const CONFIG_FIELD_WHITELISTED_DISTANCE_FIELD_NAMES = 'whitelisted-distance-from-field-names';
+    public const CONFIG_FIELD_LATITUDE_COLUMN = 'lat-column';
+    public const CONFIG_FIELD_LONGITUDE_COLUMN = 'long-column';
+    public const CONFIG_FIELD_DISTANCE_UNITS = 'units';
+    public const CONFIG_FIELD_SCOPE_DRIVER = 'scope-driver';
+    public const CONFIG_FIELD_WHITELISTED_DISTANCE_FIELD_NAMES = 'whitelisted-distance-from-field-names';
 
-    const OPTIONAL_CONFIG_FIELDS = [
+    public const OPTIONAL_CONFIG_FIELDS = [
         'scope-driver'
     ];
 
@@ -24,7 +24,9 @@ abstract class AbstractConfigManager implements ConfigManagerInterface
     {
         $this->table = $table;
         $this->config = config('geoscope.defaults');
-        $this->config[self::CONFIG_FIELD_WHITELISTED_DISTANCE_FIELD_NAMES] = config('geoscope.' . self::CONFIG_FIELD_WHITELISTED_DISTANCE_FIELD_NAMES);
+        $this->config[self::CONFIG_FIELD_WHITELISTED_DISTANCE_FIELD_NAMES] = config(
+            'geoscope.' . self::CONFIG_FIELD_WHITELISTED_DISTANCE_FIELD_NAMES
+        );
     }
 
     /**

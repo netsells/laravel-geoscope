@@ -2,14 +2,13 @@
 
 namespace Netsells\GeoScope\ScopeDrivers;
 
-use Illuminate\Database\Eloquent\Builder;
-
 final class SQLServerScopeDriver extends AbstractScopeDriver
 {
     /**
      * @param float $lat
      * @param float $long
      * @param float $distance
+     * @return mixed
      */
     public function withinDistanceOf(float $lat, float $long, float $distance)
     {
@@ -24,6 +23,7 @@ final class SQLServerScopeDriver extends AbstractScopeDriver
      * @param float $lat
      * @param float $long
      * @param float $distance
+     * @return mixed
      */
     public function orWithinDistanceOf(float $lat, float $long, float $distance)
     {
@@ -39,6 +39,7 @@ final class SQLServerScopeDriver extends AbstractScopeDriver
      * @param float $lat
      * @param float $long
      * @param float $orderDirection
+     * @return mixed
      */
     public function orderByDistanceFrom(float $lat, float $long, string $orderDirection = 'asc')
     {
@@ -54,6 +55,7 @@ final class SQLServerScopeDriver extends AbstractScopeDriver
      * @param float $lat
      * @param float $long
      * @param string $fieldName
+     * @return mixed
      */
     public function addDistanceFromField(float $lat, float $long, ?string $fieldName = null)
     {

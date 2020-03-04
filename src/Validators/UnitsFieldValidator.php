@@ -15,7 +15,7 @@ class UnitsFieldValidator
     {
         $validUnitKeys = array_keys(AbstractBuilderScope::DISTANCE_CONVERSION_FROM_METERS);
 
-        if(!in_array($field, $validUnitKeys)){
+        if (!in_array($field, $validUnitKeys)) {
             throw new InvalidConfigException("{$field} is not a valid distance unit key");
         }
     }

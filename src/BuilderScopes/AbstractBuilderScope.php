@@ -4,6 +4,7 @@ namespace Netsells\GeoScope\BuilderScopes;
 
 use Netsells\GeoScope\ScopeDriverFactory;
 use Netsells\GeoScope\Exceptions\InvalidOrderDirectionParameter;
+use Netsells\GeoScope\Exceptions\InvalidDistanceFieldNameException;
 
 abstract class AbstractBuilderScope
 {
@@ -62,7 +63,7 @@ abstract class AbstractBuilderScope
     }
 
      /**
-     * @throws InvalidOrderDirectionParameter
+     * @throws InvalidDistanceFieldNameException
      * @return mixed
      */
     public function addDistanceFromField(float $lat, float $long, string $fieldName = null)

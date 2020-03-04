@@ -30,7 +30,7 @@ class ConfigSanitizer
         $this->validateLatLongFields($config, $table);
         $this->validateDistanceUnitsField($config);
         $this->validateScopeDriverField($config);
-
+        
         foreach ($config as $configField => $configItem) {
             if (!in_array($configField, self::VALID_CONFIG_FIELDS)) {
                 unset($config[$configField]);
