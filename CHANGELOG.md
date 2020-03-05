@@ -21,3 +21,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * [1.4.1](#400---2020-02-10) - Fixes config publish command
 * [1.5.0](#400---2020-02-29) - Adds orderByDistanceFrom methods
 * [1.5.1](#400---2020-02-29) - Fixes bug with orderByDistanceFrom methods for Postgres and SQLServer
+* [1.6.0](#400---2020-05-05) - Adds addDistanceFromField() method
