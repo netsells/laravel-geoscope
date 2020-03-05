@@ -52,6 +52,76 @@ $jobs = Job::withinDistanceOf(53.957962, -1.085485, 20)
             ->orWithinDistanceOf(52.143542, -2.08556, 20);
 ```
 
+GeoScope also includes an `orderByDistanceFrom()` method that allows you to sort results by their distance from a specified lat long.
+
+```php
+    // order by distance in ascending order
+    $results =  Job::orderByDistanceFrom(30.1234, -71.2176, 'asc')->get();
+
+    // order by distance in descending order
+    $results =  Job::orderByDistanceFrom(30.1234, -71.2176, 'desc')->get();
+```
+
+A field can be added to each returned result with the calculated distance from the given lat long using the `addDistanceFromField()` method.
+
+```php
+    $results =  Job::addDistanceFromField(30.1234, -71.2176)->get();
+```
+
+before `addDistanceFrom()` is applied
+
+```json
+{
+    "id": 1,
+    "email": "vita.frami@example.com",
+    "latitude": 39.95,
+    "longitude": -76.74,
+    "created_at": "2020-02-29 19:13:08",
+    "updated_at": "2020-02-29 19:13:08",
+}
+```
+
+After `addDistanceFrom()` is applied
+```json
+{
+    "id": 1,
+    "email": "vita.frami@example.com",
+    "latitude": 39.95,
+    "longitude": -76.74,
+    "created_at": "2020-02-29 19:13:08",
+    "updated_at": "2020-02-29 19:13:08",
+    "distance": 0.2,
+    "dist_units": "miles"
+}
+```
+
+A custom field name can be passed as the third argument to the `addDistanceFrom()` method if the name has been registered in the `whitelisted-distance-from-field-names` array of the geoscope.php config file. The distance field will have a default name of `distance` and the units field will have a default name of `distance_units`. 
+
+**The `addDistanceFromField()` method is only available through the GeoScopeTrait. It is not available on the database builder**
+
+```php
+   'whitelisted-distance-from-field-names' => [
+       'custom_field_name'
+   ]
+```
+
+```php
+    $results =  Job::addDistanceFromField(30.1234, -71.2176, 'custom_field_name')->get();
+```
+
+```json
+{
+    "id": 1,
+    "email": "vita.frami@example.com",
+    "latitude": 39.95,
+    "longitude": -76.74,
+    "created_at": "2020-02-29 19:13:08",
+    "updated_at": "2020-02-29 19:13:08",
+    "custom_field_name": 0.2,
+    "custom_field_name_units": "miles"
+}
+```
+
 ### Configuration
 
 When adding the `GeoScopeTrait` to your model you can define the latitude, longitude and distance units to be used by
@@ -113,77 +183,7 @@ $jobs2 = Job::withinDistanceOf(53.957962, -1.085485, 20, 'location1')
 Any missing config options will be replaced with the defaults defined in `config('geoscope.defaults')`. 
 **Passing invalid config keys will also cause GeoScope to fallback to these defaults for all config fields.**
 
-GeoScope also includes an `orderByDistanceFrom()` method that allows you to sort results by their distance from a specified lat long.
 
-```php
-    // order by distance in ascending order
-    $results =  Job::orderByDistanceFrom(30.1234, -71.2176, 'asc')->get();
-
-    // order by distance in descending order
-    $results =  Job::orderByDistanceFrom(30.1234, -71.2176, 'desc')->get();
-```
-
-### The `addDistanceFrom()` method
-
-A field can be added to each returned result with the calculated distance from the given lat long using the `addDistanceFromField()` method.
-
-```php
-    $results =  Job::addDistanceFromField(30.1234, -71.2176)->get();
-```
-
-before `addDistanceFrom()` is applied
-
-```json
-{
-    "id": 1,
-    "email": "vita.frami@example.com",
-    "latitude": 39.95,
-    "longitude": -76.74,
-    "created_at": "2020-02-29 19:13:08",
-    "updated_at": "2020-02-29 19:13:08",
-}
-```
-
-After `addDistanceFrom()` is applied
-```json
-{
-    "id": 1,
-    "email": "vita.frami@example.com",
-    "latitude": 39.95,
-    "longitude": -76.74,
-    "created_at": "2020-02-29 19:13:08",
-    "updated_at": "2020-02-29 19:13:08",
-    "distance": 0.2,
-    "dist_units": "miles"
-}
-```
-
-A custom field name can be passed as the third argument to the `addDistanceFrom()` method if the name has been registered in the `whitelisted-distance-from-field-names` array of the geoscope.php config file. The distance field will have a default name of `distance` and the units field will have a default name of `distance_units`. 
-
-**The `addDistanceFromField()` method is only available through the GeoScopeTrait. It is not available on the database builder**
-
-```php
-   'whitelisted-distance-from-field-names' => [
-       'custom_field_name'
-   ]
-```
-
-```php
-    $results =  Job::addDistanceFromField(30.1234, -71.2176, 'custom_field_name')->get();
-```
-
-```json
-{
-    "id": 1,
-    "email": "vita.frami@example.com",
-    "latitude": 39.95,
-    "longitude": -76.74,
-    "created_at": "2020-02-29 19:13:08",
-    "updated_at": "2020-02-29 19:13:08",
-    "custom_field_name": 0.2,
-    "custom_field_name_units": "miles"
-}
-```
 
 ## Database Query Builder
 Geoscope also allows you to call the `withinDistanceOf()`, `orWithinDistanceOf()` and `orderByDistanceFrom()` methods directly off the DB query builder:
