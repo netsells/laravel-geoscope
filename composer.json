@@ -1,6 +1,6 @@
 {
     "name": "netsells/laravel-geoscope",
-    "description": "An easy to use trait that can be added to models to allow distance based scopes to be applied",
+    "description": "GeoScope is a laravel package that allows you to easily perform distance queries and geofencing based on latitudes and longitudes.",
     "type": "library",
     "keywords": [
         "laravel",
