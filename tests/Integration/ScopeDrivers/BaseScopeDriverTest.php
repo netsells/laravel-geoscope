@@ -4,8 +4,7 @@ namespace Netsells\GeoScope\Tests\Integration\ScopeDrivers;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
-use Netsells\GeoScope\Tests\Test;
-use Netsells\GeoScope\Tests\Test2;
+use Netsells\GeoScope\Tests\Integration\Database\Models\Test;
 
 abstract class BaseScopeDriverTest extends ScopeDriverTestCase
 {

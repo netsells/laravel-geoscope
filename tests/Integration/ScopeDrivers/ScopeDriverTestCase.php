@@ -5,7 +5,7 @@ namespace Netsells\GeoScope\Tests\Integration\ScopeDrivers;
 use Netsells\GeoScope\BuilderScopes\EloquentBuilderScope;
 use Netsells\GeoScope\ScopeDriverFactory;
 use Netsells\GeoScope\Tests\Integration\IntegrationTestCase;
-use Netsells\GeoScope\Tests\Test;
+use Netsells\GeoScope\Tests\Integration\Database\Models\Test;
 
 abstract class ScopeDriverTestCase extends IntegrationTestCase
 {

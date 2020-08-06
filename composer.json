@@ -2,6 +2,12 @@
     "name": "netsells/laravel-geoscope",
     "description": "An easy to use trait that can be added to models to allow distance based scopes to be applied",
     "type": "library",
+    "keywords": [
+        "laravel",
+        "latitude",
+        "longitude",
+        "distance"
+    ],
     "license": "MIT",
     "authors": [
         {

@@ -5,7 +5,7 @@ namespace Netsells\GeoScope\Tests\Integration\ScopeDrivers\Traits;
 use Netsells\GeoScope\Exceptions\InvalidConfigException;
 use Netsells\GeoScope\Exceptions\InvalidDistanceFieldNameException;
 use Netsells\GeoScope\Exceptions\ScopeDriverNotFoundException;
-use Netsells\GeoScope\Tests\Test;
+use Netsells\GeoScope\Tests\Integration\Database\Models\Test;
 
 trait ScopeDriverEloquentBuilderTests
 {

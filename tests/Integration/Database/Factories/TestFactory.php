@@ -1,8 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
-use Netsells\GeoScope\Tests\Test;
-use \Netsells\GeoScope\Tests\Test2;
+use Netsells\GeoScope\Tests\Integration\Database\Models\Test;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(
