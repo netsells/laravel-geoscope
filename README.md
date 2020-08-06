@@ -76,7 +76,7 @@ A field can be added to each returned result with the calculated distance from t
     $results =  Job::addDistanceFromField(30.1234, -71.2176)->get();
 ```
 
-before `addDistanceFrom()` is applied
+before `addDistanceFromField()` is applied
 
 ```json
 {
@@ -89,7 +89,7 @@ before `addDistanceFrom()` is applied
 }
 ```
 
-After `addDistanceFrom()` is applied
+After `addDistanceFromField()` is applied
 ```json
 {
     "id": 1,
@@ -103,7 +103,7 @@ After `addDistanceFrom()` is applied
 }
 ```
 
-A custom field name can be passed as the third argument to the `addDistanceFrom()` method if the name has been registered in the `whitelisted-distance-from-field-names` array of the geoscope.php config file. The distance field will have a default name of `distance` and the units field will have a default name of `distance_units`. 
+A custom field name can be passed as the third argument to the `addDistanceFromField()` method if the name has been registered in the `whitelisted-distance-from-field-names` array of the geoscope.php config file. The distance field will have a default name of `distance` and the units field will have a default name of `distance_units`. 
 
 **The `addDistanceFromField()` method is only available through the GeoScopeTrait. It is not available on the database builder**
 
