@@ -16,7 +16,7 @@ GeoScope is a laravel package that allows you to easily perform distance queries
 using composer:
 
 ```
-$ composer require netsells/laravel-geo-scope
+$ composer require netsells/laravel-geoscope
 ```
 
 Then publish the config file using the following artisan command:
