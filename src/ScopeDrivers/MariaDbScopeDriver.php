@@ -8,7 +8,7 @@ final class MariaDbScopeDriver extends AbstractScopeDriver
 {
     public function __construct()
     {
-        DB::connection()->getPdo()->exec('DROP PROCEDURE IF EXISTS ST_Distance_Sphere;CREATE FUNCTION ST_Distance_Sphere(pt1 POINT, pt2 POINT)
+        DB::connection()->getPdo()->exec('DROP FUNCTION IF EXISTS ST_Distance_Sphere;CREATE FUNCTION ST_Distance_Sphere(pt1 POINT, pt2 POINT)
             RETURNS double(10,2)
             
             RETURN 6371000 * 2 * ASIN(
