@@ -7,6 +7,7 @@ use Netsells\GeoScope\Interfaces\ScopeDriverInterface;
 use Netsells\GeoScope\ScopeDrivers\MySQLScopeDriver;
 use Netsells\GeoScope\ScopeDrivers\PostgreSQLScopeDriver;
 use Netsells\GeoScope\ScopeDrivers\SQLServerScopeDriver;
+use Netsells\GeoScope\ScopeDrivers\MariaDbScopeDriver;
 
 class ScopeDriverFactory
 {
@@ -17,6 +18,7 @@ class ScopeDriverFactory
         'mysql' => MySQLScopeDriver::class,
         'pgsql' => PostgreSQLScopeDriver::class,
         'sqlsrv' => SQLServerScopeDriver::class,
+        'mariadb' => MariaDbScopeDriver::class,
     ];
 
     /**
