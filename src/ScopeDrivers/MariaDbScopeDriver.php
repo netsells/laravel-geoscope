@@ -118,7 +118,7 @@ EOD;
     private function getSelectDistanceSQL(string $fieldName): string
     {
         return <<<EOD
-            ST_Distance_Sphere(
+            ROUND(ST_Distance_Sphere(
                     point({$this->config['long-column']}, {$this->config['lat-column']}),
                     point(?, ?)
                 ) * {$this->conversion}, 2) as {$fieldName}
