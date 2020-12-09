@@ -6,7 +6,15 @@
         "laravel",
         "latitude",
         "longitude",
-        "distance"
+        "distance",
+        "geofence",
+        "haversine",
+        "length",
+        "coordinate",
+        "geo",
+        "gps",
+        "point",
+        "earth"
     ],
     "license": "MIT",
     "authors": [
@@ -16,6 +24,7 @@
         }
     ],
     "require": {
+        "php": "^7.2"
     },
     "require-dev": {
         "laravel/framework": "^6.6",
