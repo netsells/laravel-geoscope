@@ -5,6 +5,7 @@ namespace Netsells\GeoScope\Tests\Unit;
 use Mockery;
 use Netsells\GeoScope\Interfaces\ScopeDriverInterface;
 use Netsells\GeoScope\ScopeDriverFactory;
+use Netsells\GeoScope\ScopeDrivers\MariaDbScopeDriver;
 use Netsells\GeoScope\ScopeDrivers\MySQLScopeDriver;
 use Netsells\GeoScope\ScopeDrivers\PostgreSQLScopeDriver;
 use Netsells\GeoScope\ScopeDrivers\SQLServerScopeDriver;
@@ -33,6 +34,14 @@ class ScopeDriverFactoryTest extends UnitTestCase
     public function factory_can_create_sqlserver_driver()
     {
         $this->scopeDriverCreationTest(SQLServerScopeDriver::class, 'sqlsrv');
+    }
+
+    /**
+     * @test
+     */
+    public function factory_can_create_mariadb_driver()
+    {
+        $this->scopeDriverCreationTest(MariaDbScopeDriver::class, 'mariadb');
     }
 
     /**
