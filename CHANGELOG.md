@@ -24,3 +24,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * [1.6.0](#400---2020-05-05) - Adds addDistanceFromField() method
 * [1.6.1](#400---2020-08-06) - Fixes tests to make the PSR4 compliant
 * [2.0.0](#400---2020-12-09) - Updates composer.json
+* [2.0.1](#400---2020-12-23) - Adds support for Mariadb
