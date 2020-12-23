@@ -41,6 +41,15 @@ class ScopeDriverFactoryTest extends UnitTestCase
      */
     public function factory_can_create_mariadb_driver()
     {
+        config()->set('database.connections.testing', [
+            'driver' => 'mysql',
+            'host' => env('MARIADB_DB_HOST'),
+            'database' => env('MARIADB_DB_DATABASE'),
+            'username' => env('MARIADB_DB_USERNAME'),
+            'password' => env('MARIADB_DB_PASSWORD'),
+            'port' => env('MARIADB_DB_PORT'),
+        ]);
+
         $this->scopeDriverCreationTest(MariaDbScopeDriver::class, 'mariadb');
     }
 

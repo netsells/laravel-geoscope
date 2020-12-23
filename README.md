@@ -7,7 +7,7 @@ GeoScope is a laravel package that allows you to easily perform distance queries
 * Can automatically order results by distance from the given lat and long.
 * Can be fully configured to work with multiple lat long columns on a single model / table.
 * Uses native database functions for the fastest possible performance - no more slow haversine queries.
-* Supports MySql, Postgres and SQLServer out of the box - no extra config required.
+* Supports MySql, Mariadb, Postgres and SQLServer out of the box.
 * Can be set to automatically add `distance` and `distance_units` fields to model results.
 * Distance units are completely configurable.
 
@@ -320,6 +320,8 @@ class AppServiceProvider extends ServiceProvider
 }
 ```
 You may set an optional `scope-driver` config key if you wish to force a specific scope driver to be used.
+
+**Note - If you're using MariaDB then you MUST set the `scope-driver` field to `mariadb`. This is due to Laravel using the same db connection settings for both Mariadb and MySQL and therefore the db connection cannot be used to distinguish the two.**
 
 ```php
  'models' => [

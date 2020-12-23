@@ -33,11 +33,11 @@ class MariaDbScopeDriverTest extends BaseScopeDriverTest
         // Setup default database to use mysql test
         $app['config']->set('database.connections.testing', [
             'driver' => 'mysql',
-            'host' => env('MARIA_DB_HOST'),
-            'database' => env('MARIA_DB_DATABASE'),
-            'username' => env('MARIA_DB_USERNAME'),
-            'password' => env('MARIA_DB_PASSWORD'),
-            'port' => env('MARIA_DB_PORT'),
+            'host' => env('MARIADB_DB_HOST'),
+            'database' => env('MARIADB_DB_DATABASE'),
+            'username' => env('MARIADB_DB_USERNAME'),
+            'password' => env('MARIADB_DB_PASSWORD'),
+            'port' => env('MARIADB_DB_PORT'),
         ]);
     }
 }

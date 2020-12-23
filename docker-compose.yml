@@ -1,0 +1,70 @@
+version: "3"
+
+services:
+  php:
+    build:
+      context: docker/php/
+    image: geoscope/php:7.3
+    volumes:
+      - .:/var/www:cached
+    depends_on:
+      - mysql
+      - mariadb
+      - sqlserver
+      - postgres
+    environment:
+      MYSQL_DB_HOST: mysql
+      SQLSRV_DB_HOST: sqlserver
+      PGSQL_DB_HOST: postgres
+      MARIADB_DB_HOST: mariadb
+    stdin_open: true
+    tty: true
+    networks:
+      - geoscope-net
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: test
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: password
+    expose:
+      - 3306
+    networks:
+      - geoscope-net
+  mariadb:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: test
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: password
+    expose:
+      - 3306
+    networks:
+      - geoscope-net
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
+    environment:
+      MSSQL_SA_PASSWORD: Password1234!
+      MSSQL_PID: Developer
+      ACCEPT_EULA: y
+    expose:
+      - 1433
+    networks:
+      - geoscope-net
+  postgres:
+    build:
+      context: docker/postgres/
+    image: geoscope/postgres
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: test
+      POSTGRES_USER: test
+    expose:
+      - 5432
+    networks:
+      - geoscope-net
+networks:
+  geoscope-net:
+    driver: bridge
