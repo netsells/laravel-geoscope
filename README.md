@@ -2,6 +2,8 @@
 
 GeoScope is a laravel package that allows you to easily perform distance queries and geofencing based on latitudes and longitudes.
 
+It is created and maintained by the [Netsells team](https://netsells.co.uk/)
+
 ## Key Features
 * Find all records within a given distance of a set latitude and longitude using either the model trait or the DB query builder.
 * Can automatically order results by distance from the given lat and long.
